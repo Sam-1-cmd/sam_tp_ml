@@ -6,11 +6,28 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-st.image("https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3d36fbae8_127078_ingenieurs-transverses-zinkevych-fotolia.jpg", use_container_width=True)
+
+# Bannière avec texte superposé
+st.markdown(
+    """
+    <div style="position: relative; text-align: center; color: white;">
+        <img src="https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3d36fbae8_127078_ingenieurs-transverses-zinkevych-fotolia.jpg" style="width: 100%; height: auto; border-radius: 10px;" />
+        <h1 style="position: absolute; top: 50%; left: 50%; 
+                   transform: translate(-50%, -50%); 
+                   background-color: rgba(0, 0, 0, 0.5); 
+                   padding: 20px; border-radius: 10px;">
+            Bienvenue sur mon application Streamlit 🚀
+        </h1>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+#st.image("https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3d36fbae8_127078_ingenieurs-transverses-zinkevych-fotolia.jpg", use_container_width=True)
 
 
 st.title("📁 Mon application Streamlit")
-st.subheader("Choisissez un type de graphique et importer votre fichier ;CSV pour l'analyser")
+st.subheader("Choisissez un type de graphique et importer votre fichier .csv pour l'analyser")
 st.text("this is a simple text element")
 
 #2 Sidebar
