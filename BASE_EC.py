@@ -2,15 +2,8 @@
 import streamlit as st
 import pandas as pd
 #import matplotlib.pyplot as plt
-import seaborn as sns
+#import seaborn as sns
 import numpy as np
-from sklearn.compose import make_column_selector as selector
-from sklearn.preprocessing import OrdinalEncoder
-from sklearn.linear_model import  Ridge
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.model_selection import train_test_split
-import plotly.express as px
 
 
 # STEP 2 : Streamlit configuration
