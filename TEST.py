@@ -10,7 +10,7 @@ st.image("https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3
 
 
 st.title("📁 Mon application Streamlit")
-st.subheader("Try out the app")
+st.subheader("Choisissez un type de graphique et importer votre fichier ;CSV pour l'analyser")
 st.text("this is a simple text element")
 
 #2 Sidebar
