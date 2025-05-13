@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 # Bannière avec texte superposé
-st.markdown(
+#st.markdown(
     """
     <div style="position: relative; text-align: center; color: white;">
         <img src="https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3d36fbae8_127078_ingenieurs-transverses-zinkevych-fotolia.jpg" style="width: 100%; height: auto; border-radius: 10px;" />
@@ -22,6 +22,25 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+st.markdown(
+    """
+    <div style="position: relative; height: 0; padding-bottom: 56.25%;">
+        <iframe src="https://youtu.be/LyFdfKUmW0s?si=DMpXIpwJVn4Obk4O"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>
+        <div style="position: absolute; top: 50%; left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: white; font-size: 36px;
+                    background-color: rgba(0,0,0,0.5);
+                    padding: 20px; border-radius: 10px;">
+            Bienvenue sur mon site Streamlit 🎥
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
 #st.image("https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3d36fbae8_127078_ingenieurs-transverses-zinkevych-fotolia.jpg", use_container_width=True)
 
