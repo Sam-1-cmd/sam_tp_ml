@@ -40,7 +40,7 @@ st.write(f"Vous avez {age} ans.")
 
 # Checkbox
 if st.checkbox("Afficher un tableau aleatoire"):
-st.write(pd.DataFrame(np.random.randn(5, 3), columns=['A', 'B', 'C']
+  st.write(pd.DataFrame(np.random.randn(5, 3), columns=['A', 'B', 'C']
 
 st.write("Merci d'avoir utilisé le site internet de Samuel")
 
