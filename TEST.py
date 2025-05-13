@@ -28,7 +28,7 @@ st.markdown(
 
 st.title("📁 Mon application Streamlit")
 st.subheader("Choisissez un type de graphique et importer votre fichier .csv pour l'analyser")
-st.text("this is a simple text element")
+
 
 #2 Sidebar
 #choix dans une liste deroulante (dans la sidebar )
