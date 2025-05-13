@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 # Bannière avec texte superposé
-#st.markdown(
+st.markdown(
     """
     <div style="position: relative; text-align: center; color: white;">
         <img src="https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3d36fbae8_127078_ingenieurs-transverses-zinkevych-fotolia.jpg" style="width: 100%; height: auto; border-radius: 10px;" />
@@ -22,7 +22,7 @@ import pandas as pd
     """,
     unsafe_allow_html=True
 )
-st.markdown(
+#st.markdown(
     """
     <div style="position: relative; height: 0; padding-bottom: 56.25%;">
         <iframe src="https://youtu.be/LyFdfKUmW0s?si=DMpXIpwJVn4Obk4O"
