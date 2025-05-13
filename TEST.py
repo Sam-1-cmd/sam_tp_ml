@@ -6,7 +6,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-st.image("https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3d36fbae8_127078_ingenieurs-transverses-zinkevych-fotolia.jpg", use_column_width=True)
+st.image("https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3d36fbae8_127078_ingenieurs-transverses-zinkevych-fotolia.jpg", use_container_width=True)
 
 
 st.title("📁 Mon application Streamlit")
