@@ -8,13 +8,13 @@ import numpy as np
 import pandas as pd
 st.write("Hello, world! This is a Streamlit app.")
 
-st.title("📁 – FolderMy Streamlit App")
+st.title("📁 Mon application Streamlit")
 st.subheader("Try out the app")
 st.text("this is a simple text element")
 
 #2 Sidebar
 #choix dans une liste deroulante (dans la sidebar )
-graph_type = st.sidebar.selectbox("coisissez un type de graphique :", ["ligne","barres", "Aucun"])
+graph_type = st.sidebar.selectbox("Choisissez un type de graphique :", ["Ligne", "Barres", "Aucun"])
 
 st.write(f"Vous avez choisi le type de graphique :{graph_type}")
 
