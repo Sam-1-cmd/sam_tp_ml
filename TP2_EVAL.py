@@ -9,7 +9,7 @@ import pandas as pd
 
 
 st.title("Mon application TP2")
-st.subheader("Try out the app")
+st.subheader("TP2 EVALUATION ")
 
 st.markdown(
     """
