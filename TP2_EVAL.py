@@ -27,7 +27,7 @@ st.markdown(
 )
 
 #Demander le nom de l'utilisateur et le saluer
-nom = st.text("Quel est votre nom ?")
+nom = st.cell("Quel est votre nom ?")
 st.write(f"Bonjour{nom} .")
 
 # Importation de fichier
