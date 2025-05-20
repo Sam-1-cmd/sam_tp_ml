@@ -31,8 +31,8 @@ nom = st.text("Quel est votre nom ?")
 st.write(f"Bonjour{nom} .")
 
 # STEP 3 : Data loading
-st.title("Step 3 - Importation de la base E+C-")
-uploaded_file = st.file_uploader("Importez le fichier Excel E+C- (feuille 'batiments')", type=["xlsx"])
+st.title("Importation d'un fichier excel")
+uploaded_file = st.file_uploader("Importez le fichier Excel )", type=["xlsx"])
 df_raw = pd.read_excel(uploaded_file, sheet_name='batiments', header=[0,1])
 
 #dealing with multi-index
