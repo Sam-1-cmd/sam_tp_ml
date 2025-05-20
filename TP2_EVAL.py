@@ -34,6 +34,10 @@ st.write(f"Bonjour{nom} .")
 st.title("Importation d'un fichier excel")
 uploaded_file = st.file_uploader("Télechargez un fichier CSV", type=["csv"])
 
+df = pd.read_csv(uploaded_file)
+st.write("Voici un aperçu de votre fichier :")
+st.dataframe(df.head())
+
 
 
 st.write("Merci d'avoir utilisé le site internet de Samuel")
