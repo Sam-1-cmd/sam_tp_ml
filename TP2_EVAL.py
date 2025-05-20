@@ -27,7 +27,7 @@ st.markdown(
 )
 
 #Demander le nom de l'utilisateur et le saluer
-nom = st.slider("Quel est votre nom ?")
+nom = st.slider("Quel est votre nom ?",1,0,2)
 st.write(f"Bonjour{nom} .")
 
 # Importation de fichier
