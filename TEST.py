@@ -45,7 +45,7 @@ elif menu == "Nos produits":
 
 # --- Formulaire de contact ---
       st.header("📬 Contactez-nous")
-   with st.form(key='contact_form'):
+    with st.form(key='contact_form'):
       nom = st.text_input("Nom")
       email = st.text_input("Email")
       message = st.text_area("Votre message")
