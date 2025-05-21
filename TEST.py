@@ -1,15 +1,24 @@
 import streamlit as st
+from PIL import Image
+pip install pillow
 
 # Configuration de la page
 st.set_page_config(page_title="ELECTRO SOLUT – Vente d'ordinateurs", layout="wide")
 
 # --- Bannière avec logo ---
+
+# Affichage du logo local
+logo = Image.open("images/logo electrosolut.png")  # mets ici le bon chemin vers ton image
+st.image(logo, width=120)  # ajuste la taille selon ton besoin
+
+# Bannière texte (sans image)
 st.markdown("""
     <div style="background-color:#0A5275;padding:20px;border-radius:10px;">
-        <h1 style="color:white;text-align:center;">💻 ELECTRO SOLUT</h1>
+        <h1 style="color:white;text-align:center;">ELECTRO SOLUT</h1>
         <h3 style="color:white;text-align:center;">Votre partenaire en solutions informatiques</h3>
     </div>
 """, unsafe_allow_html=True)
+
 
 # --- Présentation de l'entreprise ---
 st.header("📢 À propos de nous")
