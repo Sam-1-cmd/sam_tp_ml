@@ -4,21 +4,15 @@ from PIL import Image
 # Configuration de la page
 st.set_page_config(page_title="ELECTRO SOLUT – Vente d'ordinateurs", layout="wide")
 
-# Chargement du logo local
-logo_path = "07502773-b2b6-4ad9-bb64-6d36ab9651f4.png"
-logo = Image.open(logo_path)
+# --- Bannière avec logo ---
+st.markdown("""
+    <div style="background-color:#0A5275;padding:20px;border-radius:10px;">
+        <h1 style="color:white;text-align:center;">💻 ELECTRO SOLUT</h1>
+        <h3 style="color:white;text-align:center;">Votre partenaire en solutions informatiques</h3>
+    </div>
+""", unsafe_allow_html=True)
 
-# Affichage de la bannière avec logo + titre
-col1, col2 = st.columns([1, 4])
-with col1:
-    st.image(logo, width=100)
-with col2:
-    st.markdown("""
-        <div style="background-color:#0A5275;padding:20px;border-radius:10px;">
-            <h1 style="color:white;margin:0;">ELECTRO SOLUT</h1>
-            <h3 style="color:white;margin:0;">Votre partenaire en solutions informatiques</h3>
-        </div>
-    """, unsafe_allow_html=True)
+
 
 # --- Présentation de l'entreprise ---
 st.header("📢 À propos de nous")
