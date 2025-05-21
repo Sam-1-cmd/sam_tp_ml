@@ -12,6 +12,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+menu = st.radio("Navigation", ["Accueil", "Nos produits", "Contact"], horizontal=True)
 
 
 # --- Présentation de l'entreprise ---
@@ -50,6 +51,12 @@ with st.form(key='contact_form'):
 
     if envoyer:
         st.success("✅ Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.")
+#Ajout d’un bouton de téléchargement du catalogue        
+with open("catalogue_electro_solut.pdf", "rb") as file:
+    btn = st.download_button(label="📄 Télécharger notre catalogue",
+                             data=file,
+                             file_name="catalogue_electro_solut.pdf",
+                             mime="application/pdf")
 
 # --- Pied de page ---
 st.markdown("""
