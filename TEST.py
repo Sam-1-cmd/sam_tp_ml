@@ -14,11 +14,11 @@ st.markdown("""
 
 menu = st.radio("Navigation", ["Accueil", "Nos produits", "Contact"], horizontal=True)
 
-
-# --- Présentation de l'entreprise ---
-st.header("📢 À propos de nous")
-st.write("""
-**ELECTRO SOLUT** est une entreprise spécialisée dans la vente d'ordinateurs portables, de bureau et d’accessoires tech haut de gamme.
+if menu == "Accueil":
+    # --- Présentation de l'entreprise ---
+    st.header("📢 À propos de nous")
+    st.write("""
+    **ELECTRO SOLUT** est une entreprise spécialisée dans la vente d'ordinateurs portables, de bureau et d’accessoires tech haut de gamme.
 Nous proposons des produits fiables, performants et adaptés à tous les besoins (étudiants, professionnels, gamers, etc.).
 """)
 
