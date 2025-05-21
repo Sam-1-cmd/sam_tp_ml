@@ -5,14 +5,20 @@ from PIL import Image
 st.set_page_config(page_title="ELECTRO SOLUT – Vente d'ordinateurs", layout="wide")
 
 # --- Bannière avec logo ---
-st.markdown("""
-    <div style="background-color:#0A5275;padding:20px;border-radius:10px;">
-        <h1 style="color:white;text-align:center;">💻 ELECTRO SOLUT</h1>
-        <h3 style="color:white;text-align:center;">Votre partenaire en solutions informatiques</h3>
-    </div>
-""", unsafe_allow_html=True)
+logo_path = "07502773-b2b6-4ad9-bb64-6d36ab9651f4.png"  # Ton image locale (assure-toi qu'elle est bien dans le dossier)
+col1, col2 = st.columns([1, 6])
 
-menu = st.radio("Navigation", ["Accueil", "Nos produits", "Contact"], horizontal=True)
+with col1:
+    st.image(Image.open(logo_path), width=80)
+
+with col2:
+    st.markdown("""
+        <div style="background-color:#0A5275;padding:20px;border-radius:10px;">
+            <h1 style="color:white;text-align:center;">💻 ELECTRO SOLUT</h1>
+            <h3 style="color:white;text-align:center;">Votre partenaire en solutions informatiques</h3>
+        </div>
+    """, unsafe_allow_html=True)
+
 # --- Menu de navigation ---
 menu = st.radio("Navigation", ["Accueil", "Nos produits", "Contact"], horizontal=True)
 
@@ -75,3 +81,4 @@ st.markdown("""
         <p>📧 dawaeric.fofana@estp.fr | 📞 +33 6 25 16 97 85</p>
     </div>
 """, unsafe_allow_html=True)
+
