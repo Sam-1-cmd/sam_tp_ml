@@ -1,64 +1,58 @@
-#cd C:\Users\anges\.anaconda
-#python streamlit_tp.py
-#streamlit run TEST.py
-
-
 import streamlit as st
-import numpy as np
-import pandas as pd
 
-# Bannière avec texte superposé
-st.markdown(
-    """
-    <div style="position: relative; text-align: center; color: white;">
-        <img src="https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3d36fbae8_127078_ingenieurs-transverses-zinkevych-fotolia.jpg" style="width: 100%; height: auto; border-radius: 10px;" />
-        <h1 style="position: absolute; top: 50%; left: 50%; 
-                   transform: translate(-50%, -50%); 
-                   background-color: rgba(0, 0, 0, 0.5); 
-                   padding: 20px; border-radius: 10px;">
-            Bienvenue sur mon application Streamlit 🚀
-        </h1>
+# Configuration de la page
+st.set_page_config(page_title="ELECTRO SOLUT – Vente d'ordinateurs", layout="wide")
+
+# --- Bannière avec logo ---
+st.markdown("""
+    <div style="background-color:#0A5275;padding:20px;border-radius:10px;">
+        <h1 style="color:white;text-align:center;">💻 ELECTRO SOLUT</h1>
+        <h3 style="color:white;text-align:center;">Votre partenaire en solutions informatiques</h3>
     </div>
-    """,
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
 
-#st.image("https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3d36fbae8_127078_ingenieurs-transverses-zinkevych-fotolia.jpg", use_container_width=True)
+# --- Présentation de l'entreprise ---
+st.header("📢 À propos de nous")
+st.write("""
+**ELECTRO SOLUT** est une entreprise spécialisée dans la vente d'ordinateurs portables, de bureau et d’accessoires tech haut de gamme.
+Nous proposons des produits fiables, performants et adaptés à tous les besoins (étudiants, professionnels, gamers, etc.).
+""")
 
+# --- Catalogue de produits ---
+st.header("🛒 Nos produits")
+cols = st.columns(3)
 
-st.title("📁 Mon application Streamlit")
-st.subheader("Choisissez un type de graphique et importer votre fichier .csv pour l'analyser")
+with cols[0]:
+    st.image("https://images.unsplash.com/photo-1517336714731-489689fd1ca8", caption="Ordinateur portable ProBook", use_container_width=True)
+    st.write("💰 **Prix :** 899 €")
+    st.write("💡 Idéal pour les professionnels.")
 
+with cols[1]:
+    st.image("https://images.unsplash.com/photo-1587202372775-a429ef54b29b", caption="Ordinateur Gamer X-Treme", use_container_width=True)
+    st.write("💰 **Prix :** 1299 €")
+    st.write("🎮 Hautes performances pour gaming et montage vidéo.")
 
-#2 Sidebar
-#choix dans une liste deroulante (dans la sidebar )
-graph_type = st.sidebar.selectbox("Choisissez un type de graphique :", ["Ligne", "Barres", "Aucun"])
+with cols[2]:
+    st.image("https://images.unsplash.com/photo-1584270354949-1f7f25e6b3b9", caption="Mini PC Compact", use_container_width=True)
+    st.write("💰 **Prix :** 499 €")
+    st.write("🧳 Ultra-portable, idéal pour les déplacements.")
 
-st.write(f"Vous avez choisi le type de graphique :{graph_type}")
+# --- Formulaire de contact ---
+st.header("📬 Contactez-nous")
+with st.form(key='contact_form'):
+    nom = st.text_input("Nom")
+    email = st.text_input("Email")
+    message = st.text_area("Votre message")
+    envoyer = st.form_submit_button("Envoyer")
 
-#3 Uploading a Cv
-uploaded_file = st.file_uploader("Télechargez un fichier CSV", type=["csv"])
-if uploaded_file is not None:
+    if envoyer:
+        st.success("✅ Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.")
 
-    df = pd.read_csv(uploaded_file)
-    st.write("Voici un aperçu de votre fichier :")
-    st.dataframe(df.head())
-
-    #4 Affichage du graphique en fonction du type choisi
-    if graph_type == "Ligne":
-        st.line_chart(df)
-    elif graph_type == "Barres":
-        st.bar_chart(df)
-    else:
-        st.write("Aucun graphique sélectionné.")
-
-#4 SLider
-age = st.slider("Quel âge avez-vous ?", 0, 100, 25)
-st.write(f"Vous avez {age} ans.")
-
-# Checkbox
-if st.checkbox("Afficher un tableau aleatoire"):
-  st.write(pd.DataFrame(np.random.randn(5, 3), columns=['A', 'B', 'C']))
-
-st.write("Merci d'avoir utilisé le site internet de Samuel")
-
+# --- Pied de page ---
+st.markdown("""
+    <hr>
+    <div style="text-align:center;">
+        <p>© 2025 ELECTRO SOLUT – Tous droits réservés.</p>
+        <p>📧 contact@electrosolut.com | 📞 +33 1 23 45 67 89</p>
+    </div>
+""", unsafe_allow_html=True)
