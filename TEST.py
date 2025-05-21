@@ -53,6 +53,6 @@ st.markdown("""
     <hr>
     <div style="text-align:center;">
         <p>© 2025 ELECTRO SOLUT – Tous droits réservés.</p>
-        <p>📧 contact@electrosolut.com | 📞 +33 1 23 45 67 89</p>
+            <p>📧 dawaeric.fofana@estp.fr | 📞 +33 6 25 16 97 85</p>
     </div>
 """, unsafe_allow_html=True)
