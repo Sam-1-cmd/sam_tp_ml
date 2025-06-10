@@ -62,69 +62,115 @@ with cols[2]:
 st.markdown("""
     <style>
     .product-card {
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 10px;
-        margin: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 15px;
+        margin: 15px 0;
         width: 100%;
         text-align: center;
         background: white;
         position: relative;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.12);
     }
     .badge-new {
         position: absolute;
-        top: 10px;
-        left: 10px;
+        top: 12px;
+        left: 12px;
         background: #00acc1;
         color: white;
-        padding: 3px 8px;
+        padding: 4px 10px;
         font-size: 12px;
-        border-radius: 3px;
+        border-radius: 4px;
+        font-weight: 600;
     }
     .badge-discount {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        background: #ffa07a;
+        top: 12px;
+        right: 12px;
+        background: #ff6b6b;
         color: white;
-        padding: 3px 8px;
+        padding: 4px 10px;
         font-size: 12px;
-        border-radius: 3px;
+        border-radius: 4px;
+        font-weight: 600;
     }
     .product-image {
-        width: 100%;
-        max-height: 200px;
+        width: 80%;
+        height: 180px;
         object-fit: contain;
-        margin-bottom: 10px;
+        margin: 10px auto;
+        transition: transform 0.3s ease;
+    }
+    .product-image:hover {
+        transform: scale(1.05);
+    }
+    .product-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 15px 0 10px;
+        color: #333;
+    }
+    .price-container {
+        margin: 10px 0;
     }
     .price-old {
         text-decoration: line-through;
         color: #999;
-        font-size: 14px;
+        font-size: 15px;
+        margin-right: 8px;
     }
     .price-new {
-        font-size: 18px;
-        font-weight: bold;
+        font-size: 20px;
+        font-weight: 700;
         color: #2e7d32;
     }
     .stars {
         color: #ffc107;
-        font-size: 16px;
+        font-size: 18px;
+        margin: 8px 0;
+    }
+    .product-specs {
+        font-size: 14px;
+        color: #555;
+        margin: 10px 0;
+        line-height: 1.4;
+    }
+    .add-to-cart {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 4px;
+        font-weight: 600;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .add-to-cart:hover {
+        background: #3d8b40;
     }
     </style>
 
     <div class="product-card">
         <div class="badge-new">NOUVEAU</div>
         <div class="badge-discount">-60,00 €</div>
-        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image"/>
-        <p><strong>DELL LATITUDE 5500 I5-8365U</strong></p>
-        <p><span class="price-old">449,00 €</span> <span class="price-new">389,00 €</span></p>
-        <p class="stars">★★★★☆</p>
-        <p>💻 16GB RAM | 1 TO | Windows 11</p>
+        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image" alt="DELL LATITUDE 5500"/>
+        <p class="product-title">DELL LATITUDE 5500 I5-8365U</p>
+        <div class="price-container">
+            <span class="price-old">449,00 €</span>
+            <span class="price-new">389,00 €</span>
+        </div>
+        <div class="stars">★★★★☆ <span style="color: #777; font-size: 14px;">(24)</span></div>
+        <p class="product-specs">💻 16GB RAM | 1 TO SSD | Windows 11 Pro | Processeur Intel Core i5</p>
+        <button class="add-to-cart">Ajouter au panier</button>
     </div>
 """, unsafe_allow_html=True)
-
 
 # --- Formulaire de contact ---
 
