@@ -73,6 +73,6 @@ st.markdown("""
     <hr>
     <div style="text-align:center;">
         <p>© 2025 ELECTRO SOLUT – Tous droits réservés.</p>
-        <p>📧 contact@electrosolut.com | 📞 +33 1 23 45 67 89</p>
+        <p>📧 brousybah08@gmail.com | 📞 +33 7 45 50 24 52</p>
     </div>
 """, unsafe_allow_html=True)
