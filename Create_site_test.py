@@ -58,7 +58,7 @@ with st.form(key='contact_form'):
     submit_button = st.form_submit_button(label='Envoyer')
 
     if submit_button:
-        st.success("✅ Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.")
+        st.write("✅ Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.")
         st.markdown(f"""
             <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
                 <input type="hidden" name="_captcha" value="false">
