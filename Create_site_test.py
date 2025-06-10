@@ -27,7 +27,6 @@ st.write("""
 Nous proposons des produits fiables, performants et adaptés à tous les besoins (étudiants, professionnels, gamers, etc.).
 """)
 
-import streamlit as st
 
 # --- Style pour uniformiser les images ---
 st.markdown("""
@@ -44,14 +43,11 @@ st.markdown("""
 # --- Catalogue de produits ---
 st.header("🛒 Nos produits")
 
-
-import streamlit as st
-
-# Initialisation du panier dans session_state
+# Initialisation du panier
 if 'panier' not in st.session_state:
     st.session_state.panier = []
 
-# CSS pour les cartes produits (identique à précédemment)
+# CSS pour les cartes produits
 st.markdown("""
     <style>
     .product-card {
@@ -100,9 +96,6 @@ st.markdown("""
         margin: 10px auto;
         transition: transform 0.3s ease;
     }
-    .product-image:hover {
-        transform: scale(1.05);
-    }
     .product-title {
         font-size: 16px;
         font-weight: 600;
@@ -122,141 +115,98 @@ st.markdown("""
         color: #555;
         margin: 10px 0;
         line-height: 1.4;
-        min-height: 60px;
     }
-    .add-to-cart {
+    .add-to-cart-btn {
         background: #4CAF50;
         color: white;
         border: none;
         padding: 8px 20px;
         border-radius: 4px;
         font-weight: 600;
-        margin-top: 10px;
         cursor: pointer;
-        transition: background 0.3s;
         width: 100%;
+        transition: background 0.3s;
     }
-    .add-to-cart:hover {
+    .add-to-cart-btn:hover {
         background: #3d8b40;
     }
     </style>
 """, unsafe_allow_html=True)
 
-cols = st.columns(3)
-
-with cols[0]:
-    st.markdown("""
-    <div class="product-card">
-        <div class="badge-new">NOUVEAU</div>
-        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8" class="product-image" alt="ProBook"/>
-        <p class="product-title">Ordinateur portable ProBook</p>
-        <div class="price-container">
-            <span class="price">899 €</span>
-        </div>
-        <p class="product-specs">💻 i7-1165G7 | 16GB RAM | 512GB SSD | Windows 11 Pro</p>
-        <p class="product-specs">💡 Idéal pour les professionnels</p>
-        <button class="add-to-cart">Ajouter au panier</button>
-    </div>
-    """, unsafe_allow_html=True)
-
-with cols[1]:
-    st.markdown("""
-    <div class="product-card">
-        <div class="badge-discount">PROMO</div>
-        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image" alt="X-Treme"/>
-        <p class="product-title">Ordinateur Gamer X-Treme</p>
-        <div class="price-container">
-            <span class="price">1299 €</span>
-        </div>
-        <p class="product-specs">🎮 RTX 3060 | i7-12700H | 32GB RAM | 1TB SSD</p>
-        <p class="product-specs">🔥 Hautes performances gaming et montage vidéo</p>
-        <button class="add-to-cart">Ajouter au panier</button>
-    </div>
-    """, unsafe_allow_html=True)
-
-with cols[2]:
-    st.markdown("""
-    <div class="product-card">
-        <div class="badge-new">NOUVEAU</div>
-        <img src="https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg" class="product-image" alt="Mini PC"/>
-        <p class="product-title">Mini PC Compact</p>
-        <div class="price-container">
-            <span class="price">499 €</span>
-        </div>
-        <p class="product-specs">🖥️ Celeron J3455 | 8GB RAM | 128GB SSD | Windows 10 Pro</p>
-        <p class="product-specs">🧳 Ultra-portable, idéal pour les déplacements</p>
-        <button class="add-to-cart">Ajouter au panier</button>
-    </div>
-    """, unsafe_allow_html=True)
-
-# Fonction pour ajouter au panier
 def ajouter_au_panier(produit, prix):
-    produit_existe = False
     for item in st.session_state.panier:
         if item['nom'] == produit:
             item['quantite'] += 1
-            produit_existe = True
-            break
+            st.success(f"Quantité mise à jour pour {produit}!")
+            return
     
-    if not produit_existe:
-        st.session_state.panier.append({
-            'nom': produit,
-            'prix': prix,
-            'quantite': 1
-        })
+    st.session_state.panier.append({
+        'nom': produit,
+        'prix': prix,
+        'quantite': 1
+    })
     st.success(f"{produit} ajouté au panier!")
 
-# Affichage des produits
+# Affichage du catalogue principal
 st.header("🎯 Nos Produits Informatiques")
 
 cols = st.columns(3)
 
+# Produit 1 - ProBook
 with cols[0]:
-    st.markdown("""
+    produit = "ProBook"
+    prix = 899
+    st.markdown(f"""
     <div class="product-card">
         <div class="badge-new">NOUVEAU</div>
-        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8" class="product-image" alt="ProBook"/>
-        <p class="product-title">Ordinateur portable ProBook</p>
+        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8" class="product-image" alt="{produit}"/>
+        <p class="product-title">Ordinateur portable {produit}</p>
         <div class="price-container">
-            <span class="price">899 €</span>
+            <span class="price">{prix} €</span>
         </div>
         <p class="product-specs">💻 i7-1165G7 | 16GB RAM | 512GB SSD | Windows 11 Pro</p>
     </div>
     """, unsafe_allow_html=True)
-    if st.button("Ajouter au panier", key="btn1"):
-        ajouter_au_panier("ProBook", 899)
+    if st.button("Ajouter au panier", key=produit, use_container_width=True):
+        ajouter_au_panier(produit, prix)
 
+# Produit 2 - X-Treme
 with cols[1]:
-    st.markdown("""
+    produit = "X-Treme"
+    prix = 1299
+    st.markdown(f"""
     <div class="product-card">
         <div class="badge-discount">PROMO</div>
-        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image" alt="X-Treme"/>
-        <p class="product-title">Ordinateur Gamer X-Treme</p>
+        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image" alt="{produit}"/>
+        <p class="product-title">Ordinateur Gamer {produit}</p>
         <div class="price-container">
-            <span class="price">1299 €</span>
+            <span class="price">{prix} €</span>
         </div>
         <p class="product-specs">🎮 RTX 3060 | i7-12700H | 32GB RAM | 1TB SSD</p>
     </div>
     """, unsafe_allow_html=True)
-    if st.button("Ajouter au panier", key="btn2"):
-        ajouter_au_panier("X-Treme", 1299)
+    if st.button("Ajouter au panier", key=produit, use_container_width=True):
+        ajouter_au_panier(produit, prix)
 
+# Produit 3 - Mini PC
 with cols[2]:
-    st.markdown("""
+    produit = "Mini PC"
+    prix = 499
+    st.markdown(f"""
     <div class="product-card">
         <div class="badge-new">NOUVEAU</div>
-        <img src="https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg" class="product-image" alt="Mini PC"/>
-        <p class="product-title">Mini PC Compact</p>
+        <img src="https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg" class="product-image" alt="{produit}"/>
+        <p class="product-title">{produit} Compact</p>
         <div class="price-container">
-            <span class="price">499 €</span>
+            <span class="price">{prix} €</span>
         </div>
         <p class="product-specs">🖥️ Celeron J3455 | 8GB RAM | 128GB SSD | Windows 10 Pro</p>
     </div>
     """, unsafe_allow_html=True)
-    if st.button("Ajouter au panier", key="btn3"):
-        ajouter_au_panier("Mini PC", 499)
+    if st.button("Ajouter au panier", key=produit, use_container_width=True):
+        ajouter_au_panier(produit, prix)
 
-# Affichage du panier
+# Affichage du panier dans la sidebar
 st.sidebar.header("🛒 Votre Panier")
 
 if not st.session_state.panier:
@@ -264,13 +214,13 @@ if not st.session_state.panier:
 else:
     total = 0
     for i, item in enumerate(st.session_state.panier):
-        col1, col2, col3 = st.sidebar.columns([4,2,1])
+        col1, col2, col3 = st.sidebar.columns([5, 3, 1])
         with col1:
-            st.write(f"{item['nom']}")
+            st.write(f"**{item['nom']}**")
         with col2:
-            st.write(f"{item['quantite']} x {item['prix']}€")
+            st.write(f"{item['quantite']} × {item['prix']}€")
         with col3:
-            if st.sidebar.button("❌", key=f"del{i}"):
+            if st.button("❌", key=f"del{i}"):
                 if item['quantite'] > 1:
                     item['quantite'] -= 1
                 else:
@@ -282,11 +232,11 @@ else:
     st.sidebar.markdown("---")
     st.sidebar.markdown(f"**Total : {total} €**")
     
-    if st.sidebar.button("Vider le panier"):
+    if st.sidebar.button("Vider le panier", use_container_width=True):
         st.session_state.panier = []
         st.rerun()
     
-    if st.sidebar.button("Passer la commande"):
+    if st.sidebar.button("Passer commande", type="primary", use_container_width=True):
         st.sidebar.success("Commande passée avec succès!")
         st.session_state.panier = []
         st.rerun()
