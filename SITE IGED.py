@@ -10,14 +10,18 @@ st.set_page_config(
     page_icon="📚",
     layout="wide"
 )
+
 st.markdown(
     """
-    <div style="position: relative; text-align: center; color: white;">
-        <img src="https://urls.fr/ZmO3Ro" style="width: 90%; height: auto; border-radius: 10px;" />
-        #<h1 style="position: absolute; top: 50%; left: 50%; 
-                   transform: translate(-50%, -50%); 
-                   background-color: rgba(0.5, 0.5, 0.5, 0.5); 
-                   padding: 20px; border-radius: 10px;">
+    <div style="position: relative; text-align: center; color: white; margin-bottom: 2rem;">
+        <img src="https://urls.fr/ZmO3Ro" alt="Image d'accueil" style="width: 90%; height: auto; border-radius: 10px; display: block; margin: 0 auto;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                   background-color: rgba(0, 0, 0, 0.6); 
+                   padding: 20px; border-radius: 10px; width: 80%; max-width: 600px;">
+            <h1 style="margin: 0; font-size: 2.5rem;">Bienvenue sur notre plateforme</h1>
+            <p style="margin: 10px 0 0; font-size: 1.2rem;">Cours particuliers sur mesure</p>
+        </div>
+    </div>
     """,
     unsafe_allow_html=True
 )
