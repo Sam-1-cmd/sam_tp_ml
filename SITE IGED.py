@@ -69,8 +69,8 @@ if choice == "Accueil":
 
     with col2:
         # Formulaire de contact rapide
-        with st.form("contact_rapide"):
-            st.write("Demandez une évaluation gratuite")
+        with st.form(key='contact_form'):
+            st.write("Programmer un rendez-vous avec un collaborateur IGED ")
             name = st.text_input("Nom de l'élève")
             niveau = st.selectbox("Niveau scolaire", ["Primaire", "Collège", "Lycée", "Supérieur"])
             matiere = st.text_input("Matière(s) concernée(s)")
@@ -78,6 +78,16 @@ if choice == "Accueil":
             email = st.text_input("Email")
             submitted = st.form_submit_button("Envoyer la demande")
             if submitted:
+                        st.markdown(f"""
+                        <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" value="https://ton-site.com/merci">
+                        <input type="text" name="Nom" value="{name}" hidden>
+                        <input type="email" name="Email" value="{email}" hidden>
+                        <textarea name="Message" hidden>{message}</textarea>
+                       <button type="submit">Envoyer</button>
+                       </form>
+                        """, unsafe_allow_html=True)
                 st.success("Demande envoyée! Nous vous contacterons sous 48h.")
 
 # Section Nos Services
@@ -128,8 +138,8 @@ elif choice == "Nos Services":
     with tabs[3]:
         st.subheader("Préparation aux Examens")
         st.markdown("""
-        - Brevet des collèges
-        - Baccalauréat toutes séries
+        - BEPC
+        - Baccalauréat toutes séries 
         - Concours post-bac
         - Examens blancs corrigés
         - Simulation d'oraux
@@ -212,21 +222,23 @@ elif choice == "Contact":
         st.subheader("Nos Coordonnées")
         st.markdown("""
         **IGED - Innovation Groupe Étude Digitale**
-        📍 123 Rue de l'Éducation, 75000 Paris
-        📞 01 23 45 67 89
-        ✉️ contact@iged-education.fr
-
+        📍 YAMOUSSOKRO, CÔTE D'IVOIRE
+        📞 07 45 50 24 52
+        ✉️ brousybah08@gmail.com
+### 📞 Vous pouvez aussi nous appeler :
+[**Appeler maintenant**](tel:+3374502452)
+""", unsafe_allow_html=True)
         **Horaires d'ouverture:**
         Lundi-Vendredi: 9h-19h
         Samedi: 9h-17h
         """)
 
         st.subheader("Nos Agences")
-        st.write("📍 Paris | Lyon | Marseille | Toulouse | Bordeaux")
+        st.write("📍 ABIDJAN | YAMOUSSOUKO | BOUAKE ")
 
     with col2:
         st.subheader("Formulaire de Contact")
-        with st.form("contact_form"):
+        with st.form(key='contact_form'):
             nom = st.text_input("Nom*")
             email = st.text_input("Email*")
             telephone = st.text_input("Téléphone")
@@ -236,6 +248,16 @@ elif choice == "Contact":
             if submitted:
                 if nom and email and message:
                     st.success("Message envoyé! Nous vous répondrons dans les 48h.")
+                    st.markdown(f"""
+                    <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://ton-site.com/merci">
+                    <input type="text" name="Nom" value="{name}" hidden>
+                    <input type="email" name="Email" value="{email}" hidden>
+                   <textarea name="Message" hidden>{message}</textarea>
+                   <button type="submit">Envoyer</button>
+                    </form>
+                   """, unsafe_allow_html=True)
                 else:
                     st.error("Veuillez remplir les champs obligatoires (*)")
 
