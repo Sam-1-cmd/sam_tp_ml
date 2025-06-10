@@ -27,6 +27,20 @@ st.write("""
 Nous proposons des produits fiables, performants et adaptés à tous les besoins (étudiants, professionnels, gamers, etc.).
 """)
 
+import streamlit as st
+
+# --- Style pour uniformiser les images ---
+st.markdown("""
+    <style>
+    img {
+        height: 200px !important;
+        object-fit: cover;
+        width: 100% !important;
+        border-radius: 10px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # --- Catalogue de produits ---
 st.header("🛒 Nos produits")
 cols = st.columns(3)
