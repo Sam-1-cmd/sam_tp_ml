@@ -10,7 +10,20 @@ st.set_page_config(
     page_icon="📚",
     layout="wide"
 )
-
+st.markdown(
+    """
+    <div style="position: relative; text-align: center; color: white;">
+        <img src="https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/c/3/d/c3d36fbae8_127078_ingenieurs-transverses-zinkevych-fotolia.jpg" style="width: 100%; height: auto; border-radius: 10px;" />
+        <h1 style="position: absolute; top: 50%; left: 50%; 
+                   transform: translate(-50%, -50%); 
+                   background-color: rgba(0, 0, 0, 0.5); 
+                   padding: 20px; border-radius: 10px;">
+            Bienvenue sur mon application Streamlit 🚀
+        </h1>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 # CSS personnalisé
 def local_css(file_name):
     with open(file_name) as f:
