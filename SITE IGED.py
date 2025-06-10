@@ -88,11 +88,11 @@ elif choice == "Nos Services":
     with tabs[0]:
         st.subheader("Cours Particuliers à Domicile ou en Ligne")
         st.markdown("""
-        - Suivi régulier ou ponctuel
-        - Toutes matières, tous niveaux
-        - Créneaux flexibles
-        - Bilan pédagogique initial
-        - Compte-rendu après chaque séance
+         - 🔄 **Suivi régulier** ou ⏱️ **ponctuel**  
+         - 🌍 **Toutes matières**, 🎓 **tous niveaux**  
+         - 🕒 **Créneaux flexibles** (matin/soir/week-end)  
+         - 🔍 **Bilan pédagogique initial** gratuit  
+         - ✉️ **Compte-rendu détaillé** après chaque séance  
         """)
         st.markdown(
             """
