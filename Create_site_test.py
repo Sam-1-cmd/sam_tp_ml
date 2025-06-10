@@ -58,7 +58,7 @@ with st.form(key='contact_form'):
     if submit_button:
         st.markdown(f"""
             <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
-                <input type="hidden" name="_captcha" value="false">
+               # <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_next" value="https://ton-site.com/merci">
                 <input type="text" name="Nom" value="{name}" hidden>
                 <input type="email" name="Email" value="{email}" hidden>
