@@ -240,7 +240,281 @@ else:
         st.sidebar.success("Commande passée avec succès!")
         st.session_state.panier = []
         st.rerun()
-# --- Formulaire de contact ---
+
+
+#### PAIEMENT 
+from datetime import datetime
+import pandas as pd
+
+# --------------------------
+# INITIALISATION
+# --------------------------
+def init_session():
+    if 'panier' not in st.session_state:
+        st.session_state.panier = []
+    if 'commandes' not in st.session_state:
+        st.session_state.commandes = []
+    if 'etape_commande' not in st.session_state:
+        st.session_state.etape_commande = 'panier'
+
+# --------------------------
+# DONNÉES PRODUITS
+# --------------------------
+PRODUITS = {
+    "ProBook": {
+        "prix": 899,
+        "specs": "💻 i7-1165G7 | 16GB RAM | 512GB SSD | Windows 11 Pro",
+        "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8",
+        "badge": "new"
+    },
+    "X-Treme": {
+        "prix": 1299,
+        "specs": "🎮 RTX 3060 | i7-12700H | 32GB RAM | 1TB SSD",
+        "image": "https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg",
+        "badge": "discount"
+    },
+    "Mini PC": {
+        "prix": 499,
+        "specs": "🖥️ Celeron J3455 | 8GB RAM | 128GB SSD | Windows 10 Pro",
+        "image": "https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg",
+        "badge": "new"
+    }
+}
+
+# --------------------------
+# FONCTIONS PANIER
+# --------------------------
+def ajouter_au_panier(produit):
+    for item in st.session_state.panier:
+        if item['nom'] == produit:
+            item['quantite'] += 1
+            st.success(f"Quantité mise à jour pour {produit}!")
+            return
+    
+    st.session_state.panier.append({
+        'nom': produit,
+        'prix': PRODUITS[produit]["prix"],
+        'quantite': 1
+    })
+    st.success(f"{produit} ajouté au panier!")
+
+def calculer_total():
+    return sum(item['prix'] * item['quantite'] for item in st.session_state.panier)
+
+# --------------------------
+# PROCESSUS COMMANDE
+# --------------------------
+def afficher_etape_panier():
+    st.header("🛒 Votre Panier")
+    
+    if not st.session_state.panier:
+        st.warning("Votre panier est vide")
+        return False
+    
+    df = pd.DataFrame(st.session_state.panier)
+    df['Total'] = df['prix'] * df['quantite']
+    
+    # Affichage tableau interactif
+    edited_df = st.data_editor(
+        df,
+        column_config={
+            "nom": "Produit",
+            "prix": st.column_config.NumberColumn("Prix (€)", format="%d €"),
+            "quantite": st.column_config.NumberColumn("Quantité", min_value=1),
+            "Total": st.column_config.NumberColumn("Total (€)", format="%d €")
+        },
+        hide_index=True,
+        use_container_width=True
+    )
+    
+    # Mise à jour des quantités
+    for i, row in edited_df.iterrows():
+        st.session_state.panier[i]['quantite'] = row['quantite']
+    
+    st.markdown(f"### Total : {calculer_total()} €")
+    
+    if st.button("Passer la commande", type="primary"):
+        st.session_state.etape_commande = 'livraison'
+        st.rerun()
+
+def afficher_etape_livraison():
+    st.header("📦 Informations de livraison")
+    
+    with st.form("form_livraison"):
+        col1, col2 = st.columns(2)
+        with col1:
+            prenom = st.text_input("Prénom", key="prenom")
+            email = st.text_input("Email", key="email")
+        with col2:
+            nom = st.text_input("Nom", key="nom")
+            telephone = st.text_input("Téléphone", key="telephone")
+        
+        adresse = st.text_input("Adresse", key="adresse")
+        
+        col3, col4, col5 = st.columns(3)
+        with col3:
+            code_postal = st.text_input("Code postal", key="code_postal")
+        with col4:
+            ville = st.text_input("Ville", key="ville")
+        with col5:
+            pays = st.selectbox("Pays", ["France", "Belgique", "Suisse"], key="pays")
+        
+        livraison = st.radio(
+            "Mode de livraison",
+            ["Standard (3-5 jours) - Gratuit", "Express (24h) - 9.99€"],
+            key="livraison"
+        )
+        
+        if st.form_submit_button("Valider les informations"):
+            st.session_state.infos_livraison = {
+                "client": f"{prenom} {nom}",
+                "contact": {"email": email, "telephone": telephone},
+                "adresse": f"{adresse}, {code_postal} {ville}, {pays}",
+                "livraison": livraison
+            }
+            st.session_state.etape_commande = 'paiement'
+            st.rerun()
+
+def afficher_etape_paiement():
+    st.header("💳 Paiement")
+    
+    with st.form("form_paiement"):
+        st.write("### Récapitulatif de commande")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.write("**Produits**")
+            for item in st.session_state.panier:
+                st.write(f"- {item['nom']} ({item['quantite']} x {item['prix']}€)")
+        
+        with col2:
+            st.write("**Livraison**")
+            st.write(st.session_state.infos_livraison["adresse"])
+            st.write(st.session_state.infos_livraison["livraison"])
+        
+        st.markdown(f"**Total : {calculer_total()} €**")
+        
+        # Options de paiement
+        mode_paiement = st.radio(
+            "Moyen de paiement",
+            ["Carte bancaire", "PayPal", "Virement bancaire"],
+            key="paiement"
+        )
+        
+        if mode_paiement == "Carte bancaire":
+            col3, col4 = st.columns(2)
+            with col3:
+                numero_carte = st.text_input("Numéro de carte", key="num_carte")
+            with col4:
+                date_exp = st.text_input("Date d'expiration (MM/AA)", key="date_exp")
+            
+            col5, col6 = st.columns(2)
+            with col5:
+                cryptogramme = st.text_input("Cryptogramme", key="cryptogramme")
+        
+        if st.form_submit_button("Payer maintenant"):
+            traiter_paiement()
+
+def traiter_paiement():
+    # Enregistrement de la commande
+    commande = {
+        "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
+        "produits": st.session_state.panier.copy(),
+        "client": st.session_state.infos_livraison["client"],
+        "contact": st.session_state.infos_livraison["contact"],
+        "adresse": st.session_state.infos_livraison["adresse"],
+        "livraison": st.session_state.infos_livraison["livraison"],
+        "total": calculer_total(),
+        "statut": "Payée"
+    }
+    
+    st.session_state.commandes.append(commande)
+    st.session_state.panier = []
+    st.session_state.etape_commande = 'confirmation'
+    st.rerun()
+
+def afficher_confirmation():
+    st.success("✅ Commande validée et payée avec succès!")
+    st.balloons()
+    
+    derniere_commande = st.session_state.commandes[-1]
+    
+    st.write("### Récapitulatif de votre commande")
+    st.write(f"**Numéro de commande :** #{len(st.session_state.commandes)}")
+    st.write(f"**Date :** {derniere_commande['date']}")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write("**Produits commandés**")
+        for item in derniere_commande["produits"]:
+            st.write(f"- {item['nom']} ({item['quantite']} x {item['prix']}€)")
+    
+    with col2:
+        st.write("**Livraison**")
+        st.write(derniere_commande["adresse"])
+        st.write(derniere_commande["livraison"])
+    
+    st.markdown(f"**Total : {derniere_commande['total']} €**")
+    
+    st.write("Un email de confirmation vous a été envoyé à", derniere_commande["contact"]["email"])
+    
+    if st.button("Retour à l'accueil"):
+        st.session_state.etape_commande = 'panier'
+        st.rerun()
+
+# --------------------------
+# AFFICHAGE PRODUITS
+# --------------------------
+def afficher_catalogue():
+    st.header("💻 Notre Catalogue")
+    cols = st.columns(3)
+    
+    for i, (produit, details) in enumerate(PRODUITS.items()):
+        with cols[i % 3]:
+            with st.container(border=True):
+                st.image(details["image"], use_column_width=True)
+                st.subheader(produit)
+                st.markdown(details["specs"])
+                st.markdown(f"**{details['prix']} €**")
+                
+                if st.button(f"Ajouter au panier - {produit}", key=f"add_{produit}"):
+                    ajouter_au_panier(produit)
+                    st.rerun()
+
+# --------------------------
+# APPLICATION PRINCIPALE
+# --------------------------
+def main():
+    init_session()
+    
+    # Sidebar - Panier résumé
+    with st.sidebar:
+        st.header("Votre Panier")
+        if st.session_state.panier:
+            for item in st.session_state.panier:
+                st.write(f"- {item['nom']} ({item['quantite']})")
+            st.markdown(f"**Total : {calculer_total()} €**")
+            
+            if st.session_state.etape_commande == 'panier':
+                if st.button("Passer commande", type="primary"):
+                    st.session_state.etape_commande = 'livraison'
+                    st.rerun()
+        else:
+            st.write("Votre panier est vide")
+    
+    # Contenu principal
+    if st.session_state.etape_commande == 'panier':
+        afficher_catalogue()
+    elif st.session_state.etape_commande == 'livraison':
+        afficher_etape_livraison()
+    elif st.session_state.etape_commande == 'paiement':
+        afficher_etape_paiement()
+    elif st.session_state.etape_commande == 'confirmation':
+        afficher_confirmation()
+
+if __name__ == "__main__":
+    main()
+## --- Formulaire de contact ---
 
 st.header("Contactez-nous")
 
