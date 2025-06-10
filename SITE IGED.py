@@ -14,7 +14,7 @@ st.markdown(
     """
     <div style="position: relative; text-align: center; color: white;">
         <img src="https://urls.fr/ZmO3Ro" style="width: 90%; height: auto; border-radius: 10px;" />
-        <h1 style="position: absolute; top: 50%; left: 50%; 
+        #<h1 style="position: absolute; top: 50%; left: 50%; 
                    transform: translate(-50%, -50%); 
                    background-color: rgba(0.5, 0.5, 0.5, 0.5); 
                    padding: 20px; border-radius: 10px;">
