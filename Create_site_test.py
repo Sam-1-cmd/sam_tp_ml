@@ -404,7 +404,7 @@ def main():
         if st.session_state.panier:
             for item in st.session_state.panier:
                 st.write(f"- {item['nom']} ({item['quantite']})")
-            st.markdown(f"**Total : {calculer_total()} €**")
+            st.markdown(f"**Total : {total} €**")
             
             if st.session_state.etape_commande == 'panier':
                 if st.button("Passer commande", type="primary"):
