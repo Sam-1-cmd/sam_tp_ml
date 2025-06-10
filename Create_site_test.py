@@ -261,14 +261,6 @@ def init_session():
 
 # --------------------------
 # PROCESSUS COMMANDE
-# --------------------------
-
-    
-    # Mise à jour des quantités
-    for i, row in edited_df.iterrows():
-        st.session_state.panier[i]['quantite'] = row['quantite']
-    
-    st.markdown(f"### Total : {calculer_total()} €")
     
     if st.button("Passer la commande", type="primary"):
         st.session_state.etape_commande = 'livraison'
