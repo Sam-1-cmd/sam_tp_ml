@@ -68,6 +68,11 @@ with st.form(key='contact_form'):
         """, unsafe_allow_html=True)
         st.write("✅ Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.")
 
+st.markdown("""
+### 📞 Vous pouvez aussi nous appeler :
+[**Appeler maintenant**](tel:+3374502452)
+""", unsafe_allow_html=True)
+
 # --- Pied de page ---
 st.markdown("""
     <hr>
