@@ -54,7 +54,7 @@ with st.form(key='contact_form'):
     name = st.text_input("Nom")
     email = st.text_input("Email")
     message = st.text_area("Message")
-
+    submit_button = st.form_submit_button(label='Terminer')
     if submit_button:
         st.markdown(f"""
             <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
