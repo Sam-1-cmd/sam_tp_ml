@@ -94,7 +94,7 @@ elif choice == "Nos Services":
         - Bilan pédagogique initial
         - Compte-rendu après chaque séance
         """)
-        st.image("cours_particuliers.jpg", caption="Nos professeurs se déplacent à votre domicile", width=400)
+        st.images("cours_particuliers.jpg", caption="Nos professeurs se déplacent à votre domicile", width=400)
 
     with tabs[1]:
         st.subheader("Stages Intensifs pendant les Vacances")
@@ -143,7 +143,7 @@ elif choice == "Nos Professeurs":
     for i in range(len(profs)):
         col1, col2 = st.columns([1, 3])
         with col1:
-            st.image(profs['Photo'][i], width=150)
+            st.images(profs['Photo'][i], width=150)
         with col2:
             st.subheader(profs['Nom'][i])
             st.write(f"**Matières:** {profs['Matières'][i]}")
@@ -256,7 +256,7 @@ elif choice == "Espace Élève":
 
         **Demandez vos identifiants à votre conseiller pédagogique**
         """)
-        st.image("platforme.jpg", width=500)
+        st.images("platforme.jpg", width=500)
 
 # Pied de page
 st.markdown("---")
