@@ -44,6 +44,14 @@ st.markdown("""
 # --- Catalogue de produits ---
 st.header("🛒 Nos produits")
 
+
+import streamlit as st
+
+# Initialisation du panier dans session_state
+if 'panier' not in st.session_state:
+    st.session_state.panier = []
+
+# CSS pour les cartes produits (identique à précédemment)
 st.markdown("""
     <style>
     .product-card {
@@ -180,6 +188,108 @@ with cols[2]:
         <button class="add-to-cart">Ajouter au panier</button>
     </div>
     """, unsafe_allow_html=True)
+
+# Fonction pour ajouter au panier
+def ajouter_au_panier(produit, prix):
+    produit_existe = False
+    for item in st.session_state.panier:
+        if item['nom'] == produit:
+            item['quantite'] += 1
+            produit_existe = True
+            break
+    
+    if not produit_existe:
+        st.session_state.panier.append({
+            'nom': produit,
+            'prix': prix,
+            'quantite': 1
+        })
+    st.success(f"{produit} ajouté au panier!")
+
+# Affichage des produits
+st.header("🎯 Nos Produits Informatiques")
+
+cols = st.columns(3)
+
+with cols[0]:
+    st.markdown("""
+    <div class="product-card">
+        <div class="badge-new">NOUVEAU</div>
+        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8" class="product-image" alt="ProBook"/>
+        <p class="product-title">Ordinateur portable ProBook</p>
+        <div class="price-container">
+            <span class="price">899 €</span>
+        </div>
+        <p class="product-specs">💻 i7-1165G7 | 16GB RAM | 512GB SSD | Windows 11 Pro</p>
+    </div>
+    """, unsafe_allow_html=True)
+    if st.button("Ajouter au panier", key="btn1"):
+        ajouter_au_panier("ProBook", 899)
+
+with cols[1]:
+    st.markdown("""
+    <div class="product-card">
+        <div class="badge-discount">PROMO</div>
+        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image" alt="X-Treme"/>
+        <p class="product-title">Ordinateur Gamer X-Treme</p>
+        <div class="price-container">
+            <span class="price">1299 €</span>
+        </div>
+        <p class="product-specs">🎮 RTX 3060 | i7-12700H | 32GB RAM | 1TB SSD</p>
+    </div>
+    """, unsafe_allow_html=True)
+    if st.button("Ajouter au panier", key="btn2"):
+        ajouter_au_panier("X-Treme", 1299)
+
+with cols[2]:
+    st.markdown("""
+    <div class="product-card">
+        <div class="badge-new">NOUVEAU</div>
+        <img src="https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg" class="product-image" alt="Mini PC"/>
+        <p class="product-title">Mini PC Compact</p>
+        <div class="price-container">
+            <span class="price">499 €</span>
+        </div>
+        <p class="product-specs">🖥️ Celeron J3455 | 8GB RAM | 128GB SSD | Windows 10 Pro</p>
+    </div>
+    """, unsafe_allow_html=True)
+    if st.button("Ajouter au panier", key="btn3"):
+        ajouter_au_panier("Mini PC", 499)
+
+# Affichage du panier
+st.sidebar.header("🛒 Votre Panier")
+
+if not st.session_state.panier:
+    st.sidebar.write("Votre panier est vide")
+else:
+    total = 0
+    for i, item in enumerate(st.session_state.panier):
+        col1, col2, col3 = st.sidebar.columns([4,2,1])
+        with col1:
+            st.write(f"{item['nom']}")
+        with col2:
+            st.write(f"{item['quantite']} x {item['prix']}€")
+        with col3:
+            if st.sidebar.button("❌", key=f"del{i}"):
+                if item['quantite'] > 1:
+                    item['quantite'] -= 1
+                else:
+                    st.session_state.panier.pop(i)
+                st.rerun()
+        
+        total += item['prix'] * item['quantite']
+    
+    st.sidebar.markdown("---")
+    st.sidebar.markdown(f"**Total : {total} €**")
+    
+    if st.sidebar.button("Vider le panier"):
+        st.session_state.panier = []
+        st.rerun()
+    
+    if st.sidebar.button("Passer la commande"):
+        st.sidebar.success("Commande passée avec succès!")
+        st.session_state.panier = []
+        st.rerun()
 
 # --- Formulaire de contact ---
 
