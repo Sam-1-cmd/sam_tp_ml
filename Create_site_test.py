@@ -43,22 +43,6 @@ st.markdown("""
 
 # --- Catalogue de produits ---
 st.header("🛒 Nos produits")
-cols = st.columns(3)
-
-with cols[0]:
-    st.image("https://images.unsplash.com/photo-1517336714731-489689fd1ca8", caption="Ordinateur portable ProBook", use_container_width=True)
-    st.write("💰 **Prix :** 899 €")
-    st.write("💡 Idéal pour les professionnels.")
-
-with cols[1]:
-    st.image("https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg", caption="Ordinateur Gamer X-Treme", use_container_width=True)
-    st.write("💰 **Prix :** 1299 €")
-    st.write("🎮 Hautes performances pour gaming et montage vidéo.")
-
-with cols[2]:
-    st.image("https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg", caption="Mini PC Compact", use_container_width=True)
-    st.write("💰 **Prix :** 499 €")
-    st.write("🧳 Ultra-portable, idéal pour les déplacements.")
 
 st.markdown("""
     <style>
