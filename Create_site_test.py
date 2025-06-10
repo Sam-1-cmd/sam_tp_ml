@@ -59,20 +59,21 @@ with cols[2]:
     st.image("https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg", caption="Mini PC Compact", use_container_width=True)
     st.write("💰 **Prix :** 499 €")
     st.write("🧳 Ultra-portable, idéal pour les déplacements.")
+
 st.markdown("""
     <style>
     .product-card {
         border: 1px solid #e0e0e0;
         border-radius: 12px;
         padding: 15px;
-        margin: 15px 0;
-        width: 100%;
+        margin-bottom: 20px;
         text-align: center;
         background: white;
         position: relative;
         box-shadow: 0 4px 8px rgba(0,0,0,0.08);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        height: 100%;
     }
     .product-card:hover {
         transform: translateY(-5px);
@@ -102,7 +103,7 @@ st.markdown("""
     }
     .product-image {
         width: 80%;
-        height: 180px;
+        height: 150px;
         object-fit: contain;
         margin: 10px auto;
         transition: transform 0.3s ease;
@@ -111,7 +112,7 @@ st.markdown("""
         transform: scale(1.05);
     }
     .product-title {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
         margin: 15px 0 10px;
         color: #333;
@@ -119,27 +120,17 @@ st.markdown("""
     .price-container {
         margin: 10px 0;
     }
-    .price-old {
-        text-decoration: line-through;
-        color: #999;
-        font-size: 15px;
-        margin-right: 8px;
-    }
-    .price-new {
-        font-size: 20px;
+    .price {
+        font-size: 18px;
         font-weight: 700;
         color: #2e7d32;
-    }
-    .stars {
-        color: #ffc107;
-        font-size: 18px;
-        margin: 8px 0;
     }
     .product-specs {
         font-size: 14px;
         color: #555;
         margin: 10px 0;
         line-height: 1.4;
+        min-height: 60px;
     }
     .add-to-cart {
         background: #4CAF50;
@@ -151,26 +142,60 @@ st.markdown("""
         margin-top: 10px;
         cursor: pointer;
         transition: background 0.3s;
+        width: 100%;
     }
     .add-to-cart:hover {
         background: #3d8b40;
     }
     </style>
+""", unsafe_allow_html=True)
 
+cols = st.columns(3)
+
+with cols[0]:
+    st.markdown("""
     <div class="product-card">
         <div class="badge-new">NOUVEAU</div>
-        <div class="badge-discount">-60,00 €</div>
-        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image" alt="DELL LATITUDE 5500"/>
-        <p class="product-title">DELL LATITUDE 5500 I5-8365U</p>
+        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8" class="product-image" alt="ProBook"/>
+        <p class="product-title">Ordinateur portable ProBook</p>
         <div class="price-container">
-            <span class="price-old">449,00 €</span>
-            <span class="price-new">389,00 €</span>
+            <span class="price">899 €</span>
         </div>
-        <div class="stars">★★★★☆ <span style="color: #777; font-size: 14px;">(24)</span></div>
-        <p class="product-specs">💻 16GB RAM | 1 TO SSD | Windows 11 Pro | Processeur Intel Core i5</p>
+        <p class="product-specs">💻 i7-1165G7 | 16GB RAM | 512GB SSD | Windows 11 Pro</p>
+        <p class="product-specs">💡 Idéal pour les professionnels</p>
         <button class="add-to-cart">Ajouter au panier</button>
     </div>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+
+with cols[1]:
+    st.markdown("""
+    <div class="product-card">
+        <div class="badge-discount">PROMO</div>
+        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image" alt="X-Treme"/>
+        <p class="product-title">Ordinateur Gamer X-Treme</p>
+        <div class="price-container">
+            <span class="price">1299 €</span>
+        </div>
+        <p class="product-specs">🎮 RTX 3060 | i7-12700H | 32GB RAM | 1TB SSD</p>
+        <p class="product-specs">🔥 Hautes performances gaming et montage vidéo</p>
+        <button class="add-to-cart">Ajouter au panier</button>
+    </div>
+    """, unsafe_allow_html=True)
+
+with cols[2]:
+    st.markdown("""
+    <div class="product-card">
+        <div class="badge-new">NOUVEAU</div>
+        <img src="https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg" class="product-image" alt="Mini PC"/>
+        <p class="product-title">Mini PC Compact</p>
+        <div class="price-container">
+            <span class="price">499 €</span>
+        </div>
+        <p class="product-specs">🖥️ Celeron J3455 | 8GB RAM | 128GB SSD | Windows 10 Pro</p>
+        <p class="product-specs">🧳 Ultra-portable, idéal pour les déplacements</p>
+        <button class="add-to-cart">Ajouter au panier</button>
+    </div>
+    """, unsafe_allow_html=True)
 
 # --- Formulaire de contact ---
 
