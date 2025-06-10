@@ -42,7 +42,7 @@ with cols[1]:
     st.write("🎮 Hautes performances pour gaming et montage vidéo.")
 
 with cols[2]:
-    st.image("https://images.unsplash.com/photo-1584270354949-1f7f25e6b3b9", caption="Mini PC Compact", use_container_width=True)
+    st.image("https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg", caption="Mini PC Compact", use_container_width=True)
     st.write("💰 **Prix :** 499 €")
     st.write("🧳 Ultra-portable, idéal pour les déplacements.")
 
