@@ -13,7 +13,7 @@ st.set_page_config(
 st.markdown(
     """
     <div style="position: relative; text-align: center; color: white;">
-        <img src="https://youtu.be/5agcs8--Szo?si=CPdHYP7FHDyDNXms" style="width: 100%; height: auto; border-radius: 10px;" />
+        <img src="https://urls.fr/ZmO3Ro" style="width: 50%; height: auto; border-radius: 10px;" />
         <h1 style="position: absolute; top: 50%; left: 50%; 
                    transform: translate(-50%, -50%); 
                    background-color: rgba(0, 0, 0, 0.5); 
