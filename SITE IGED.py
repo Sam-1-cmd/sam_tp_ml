@@ -225,9 +225,9 @@ elif choice == "Contact":
         📍 YAMOUSSOKRO, CÔTE D'IVOIRE
         📞 07 45 50 24 52
         ✉️ brousybah08@gmail.com
-### 📞 Vous pouvez aussi nous appeler :
-[**Appeler maintenant**](tel:+3374502452)
-""", unsafe_allow_html=True)
+        📞 Vous pouvez aussi nous appeler :
+        [**Appeler maintenant**](tel:+3374502452)
+        """, unsafe_allow_html=True)
         **Horaires d'ouverture:**
         Lundi-Vendredi: 9h-19h
         Samedi: 9h-17h
