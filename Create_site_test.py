@@ -59,7 +59,6 @@ with cols[2]:
     st.image("https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg", caption="Mini PC Compact", use_container_width=True)
     st.write("💰 **Prix :** 499 €")
     st.write("🧳 Ultra-portable, idéal pour les déplacements.")
-
 st.markdown("""
     <style>
     .product-card {
@@ -95,8 +94,8 @@ st.markdown("""
     }
     .product-image {
         width: 100%;
-        height: 180px;
-        object-fit: cover;
+        max-height: 200px;
+        object-fit: contain;
         margin-bottom: 10px;
     }
     .price-old {
@@ -118,7 +117,7 @@ st.markdown("""
     <div class="product-card">
         <div class="badge-new">NOUVEAU</div>
         <div class="badge-discount">-60,00 €</div>
-        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8" class="product-image"/>
+        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image"/>
         <p><strong>DELL LATITUDE 5500 I5-8365U</strong></p>
         <p><span class="price-old">449,00 €</span> <span class="price-new">389,00 €</span></p>
         <p class="stars">★★★★☆</p>
