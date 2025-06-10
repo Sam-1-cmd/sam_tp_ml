@@ -94,7 +94,16 @@ elif choice == "Nos Services":
         - Bilan pédagogique initial
         - Compte-rendu après chaque séance
         """)
-        st.image("https://tewmoutew.com/img/photos/2021-10-02-201830_bde15679.jpg", caption="Nos professeurs se déplacent à votre domicile", width=400)
+st.markdown(
+    """
+    <div style="text-align: center;">
+        <img src="https://tewmoutew.com/img/photos/2021-10-02-201830_bde15679.jpg" 
+             style="width: 400px; border-radius: 10px;" />
+        <p style="font-style: italic;">Nos professeurs se déplacent à votre domicile</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
     with tabs[1]:
         st.subheader("Stages Intensifs pendant les Vacances")
