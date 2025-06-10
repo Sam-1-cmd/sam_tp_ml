@@ -1,0 +1,44 @@
+/* Couleurs principales */
+:root {
+    --primary: #4B8DF8;
+    --secondary: #FF6B6B;
+    --dark: #2C3E50;
+    --light: #F8F9FA;
+}
+
+/* Style général */
+.stApp {
+    background-color: var(--light);
+}
+
+/* Titres */
+h1, h2, h3 {
+    color: var(--dark);
+}
+
+/* Boutons */
+.stButton>button {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+}
+
+.stButton>button:hover {
+    background-color: var(--secondary);
+}
+
+/* Cartes */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 10px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background-color: var(--light);
+    border-radius: 8px 8px 0 0;
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: var(--primary);
+    color: white;
+}
