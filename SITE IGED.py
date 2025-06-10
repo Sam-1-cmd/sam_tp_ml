@@ -6,6 +6,7 @@ import pandas as pd
 
 # Configuration de la page
 st.set_page_config(
+    page_title="IGED",
     page_icon="📚",
     layout="wide"
 )
@@ -17,7 +18,7 @@ st.markdown(
                    transform: translate(-50%, -50%); 
                    background-color: rgba(0, 0, 0, 0.5); 
                    padding: 20px; border-radius: 10px;">
-            IGED - Innovation Groupe Étude Digitale
+                   Innovation Groupe Étude Digitale
         </h1>
     </div>
     """,
