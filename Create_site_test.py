@@ -124,7 +124,6 @@ st.markdown("""
         <p class="stars">★★★★☆</p>
         <p>💻 16GB RAM | 1 TO | Windows 11</p>
     </div>
-""", unsafe_allow_html=True) c'est une carte produit, mais l'image ets mal dimensionnée et on ne voit donc pas l'image 
 """, unsafe_allow_html=True)
 
 
