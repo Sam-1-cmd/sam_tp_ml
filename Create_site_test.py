@@ -96,10 +96,12 @@ st.markdown("""
         border-radius: 3px;
     }
     .product-image {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-        margin-bottom: 10px;
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
     }
     .price-old {
         text-decoration: line-through;
