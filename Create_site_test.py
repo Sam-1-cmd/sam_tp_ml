@@ -37,7 +37,7 @@ with cols[0]:
     st.write("💡 Idéal pour les professionnels.")
 
 with cols[1]:
-    st.image("https://images.unsplash.com/photo-1587202372775-a429ef54b29b", caption="Ordinateur Gamer X-Treme", use_container_width=True)
+    st.image("https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg", caption="Ordinateur Gamer X-Treme", use_container_width=True)
     st.write("💰 **Prix :** 1299 €")
     st.write("🎮 Hautes performances pour gaming et montage vidéo.")
 
