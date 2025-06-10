@@ -43,12 +43,16 @@ st.markdown("""
 # --- Catalogue de produits ---
 st.header("🛒 Nos produits")
 
-# Initialisation du panier
-if 'panier' not in st.session_state:
-    st.session_state.panier = []
+import streamlit as st
 
-# CSS pour les cartes produits
-st.markdown("""
+# ---- Initialisation ----
+def init_panier():
+    if 'panier' not in st.session_state:
+        st.session_state.panier = []
+
+# ---- CSS ----
+def load_css():
+    st.markdown("""
     <style>
     .product-card {
         border: 1px solid #e0e0e0;
@@ -63,76 +67,11 @@ st.markdown("""
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         height: 100%;
     }
-    .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0,0,0,0.12);
-    }
-    .badge-new {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        background: #00acc1;
-        color: white;
-        padding: 4px 10px;
-        font-size: 12px;
-        border-radius: 4px;
-        font-weight: 600;
-    }
-    .badge-discount {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        background: #ff6b6b;
-        color: white;
-        padding: 4px 10px;
-        font-size: 12px;
-        border-radius: 4px;
-        font-weight: 600;
-    }
-    .product-image {
-        width: 80%;
-        height: 150px;
-        object-fit: contain;
-        margin: 10px auto;
-        transition: transform 0.3s ease;
-    }
-    .product-title {
-        font-size: 16px;
-        font-weight: 600;
-        margin: 15px 0 10px;
-        color: #333;
-    }
-    .price-container {
-        margin: 10px 0;
-    }
-    .price {
-        font-size: 18px;
-        font-weight: 700;
-        color: #2e7d32;
-    }
-    .product-specs {
-        font-size: 14px;
-        color: #555;
-        margin: 10px 0;
-        line-height: 1.4;
-    }
-    .add-to-cart-btn {
-        background: #4CAF50;
-        color: white;
-        border: none;
-        padding: 8px 20px;
-        border-radius: 4px;
-        font-weight: 600;
-        cursor: pointer;
-        width: 100%;
-        transition: background 0.3s;
-    }
-    .add-to-cart-btn:hover {
-        background: #3d8b40;
-    }
+    /* ... (garder le reste du CSS) ... */
     </style>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
+# ---- Gestion du panier ----
 def ajouter_au_panier(produit, prix):
     for item in st.session_state.panier:
         if item['nom'] == produit:
@@ -147,71 +86,13 @@ def ajouter_au_panier(produit, prix):
     })
     st.success(f"{produit} ajouté au panier!")
 
-# Affichage du catalogue principal
-st.header("🎯 Nos Produits Informatiques")
-
-cols = st.columns(3)
-
-# Produit 1 - ProBook
-with cols[0]:
-    produit = "ProBook"
-    prix = 899
-    st.markdown(f"""
-    <div class="product-card">
-        <div class="badge-new">NOUVEAU</div>
-        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8" class="product-image" alt="{produit}"/>
-        <p class="product-title">Ordinateur portable {produit}</p>
-        <div class="price-container">
-            <span class="price">{prix} €</span>
-        </div>
-        <p class="product-specs">💻 i7-1165G7 | 16GB RAM | 512GB SSD | Windows 11 Pro</p>
-    </div>
-    """, unsafe_allow_html=True)
-    if st.button("Ajouter au panier", key=produit, use_container_width=True):
-        ajouter_au_panier(produit, prix)
-
-# Produit 2 - X-Treme
-with cols[1]:
-    produit = "X-Treme"
-    prix = 1299
-    st.markdown(f"""
-    <div class="product-card">
-        <div class="badge-discount">PROMO</div>
-        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image" alt="{produit}"/>
-        <p class="product-title">Ordinateur Gamer {produit}</p>
-        <div class="price-container">
-            <span class="price">{prix} €</span>
-        </div>
-        <p class="product-specs">🎮 RTX 3060 | i7-12700H | 32GB RAM | 1TB SSD</p>
-    </div>
-    """, unsafe_allow_html=True)
-    if st.button("Ajouter au panier", key=produit, use_container_width=True):
-        ajouter_au_panier(produit, prix)
-
-# Produit 3 - Mini PC
-with cols[2]:
-    produit = "Mini PC"
-    prix = 499
-    st.markdown(f"""
-    <div class="product-card">
-        <div class="badge-new">NOUVEAU</div>
-        <img src="https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg" class="product-image" alt="{produit}"/>
-        <p class="product-title">{produit} Compact</p>
-        <div class="price-container">
-            <span class="price">{prix} €</span>
-        </div>
-        <p class="product-specs">🖥️ Celeron J3455 | 8GB RAM | 128GB SSD | Windows 10 Pro</p>
-    </div>
-    """, unsafe_allow_html=True)
-    if st.button("Ajouter au panier", key=produit, use_container_width=True):
-        ajouter_au_panier(produit, prix)
-
-# Affichage du panier dans la sidebar
-st.sidebar.header("🛒 Votre Panier")
-
-if not st.session_state.panier:
-    st.sidebar.write("Votre panier est vide")
-else:
+def afficher_panier():
+    st.sidebar.header("🛒 Votre Panier")
+    
+    if not st.session_state.panier:
+        st.sidebar.write("Votre panier est vide")
+        return
+    
     total = 0
     for i, item in enumerate(st.session_state.panier):
         col1, col2, col3 = st.sidebar.columns([5, 3, 1])
@@ -221,11 +102,7 @@ else:
             st.write(f"{item['quantite']} × {item['prix']}€")
         with col3:
             if st.button("❌", key=f"del{i}"):
-                if item['quantite'] > 1:
-                    item['quantite'] -= 1
-                else:
-                    st.session_state.panier.pop(i)
-                st.rerun()
+                gerer_suppression(i)
         
         total += item['prix'] * item['quantite']
     
@@ -237,9 +114,78 @@ else:
         st.rerun()
     
     if st.sidebar.button("Passer commande", type="primary", use_container_width=True):
-        st.sidebar.success("Commande passée avec succès!")
-        st.session_state.panier = []
-        st.rerun()
+        passer_commande()
+
+def gerer_suppression(index):
+    if st.session_state.panier[index]['quantite'] > 1:
+        st.session_state.panier[index]['quantite'] -= 1
+    else:
+        st.session_state.panier.pop(index)
+    st.rerun()
+
+def passer_commande():
+    st.sidebar.success("Commande passée avec succès!")
+    st.session_state.panier = []
+    st.rerun()
+
+# ---- Affichage produits ----
+def creer_carte_produit(produit, prix, specs, image, badge=None):
+    with st.container():
+        st.markdown(f"""
+        <div class="product-card">
+            {f'<div class="badge-{badge}">{badge.upper()}</div>' if badge else ''}
+            <img src="{image}" class="product-image" alt="{produit}"/>
+            <p class="product-title">{produit}</p>
+            <div class="price-container">
+                <span class="price">{prix} €</span>
+            </div>
+            <p class="product-specs">{specs}</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("Ajouter au panier", key=produit, use_container_width=True):
+            ajouter_au_panier(produit, prix)
+
+def afficher_catalogue():
+    st.header("🎯 Nos Produits Informatiques")
+    cols = st.columns(3)
+    
+    with cols[0]:
+        creer_carte_produit(
+            produit="ProBook",
+            prix=899,
+            specs="💻 i7-1165G7 | 16GB RAM | 512GB SSD | Windows 11 Pro",
+            image="https://images.unsplash.com/photo-1517336714731-489689fd1ca8",
+            badge="new"
+        )
+    
+    with cols[1]:
+        creer_carte_produit(
+            produit="X-Treme",
+            prix=1299,
+            specs="🎮 RTX 3060 | i7-12700H | 32GB RAM | 1TB SSD",
+            image="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg",
+            badge="discount"
+        )
+    
+    with cols[2]:
+        creer_carte_produit(
+            produit="Mini PC",
+            prix=499,
+            specs="🖥️ Celeron J3455 | 8GB RAM | 128GB SSD | Windows 10 Pro",
+            image="https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg",
+            badge="new"
+        )
+
+# ---- Application principale ----
+def main():
+    init_panier()
+    load_css()
+    afficher_catalogue()
+    afficher_panier()
+
+if __name__ == "__main__":
+    main()
 
 # --- Formulaire de contact ---
 
