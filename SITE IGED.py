@@ -94,7 +94,7 @@ elif choice == "Nos Services":
         - Bilan pédagogique initial
         - Compte-rendu après chaque séance
         """)
-        st.images("cours_particuliers.jpg", caption="Nos professeurs se déplacent à votre domicile", width=400)
+        st.image("https://tewmoutew.com/img/photos/2021-10-02-201830_bde15679.jpg", caption="Nos professeurs se déplacent à votre domicile", width=400)
 
     with tabs[1]:
         st.subheader("Stages Intensifs pendant les Vacances")
