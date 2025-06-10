@@ -257,75 +257,12 @@ def init_session():
     if 'etape_commande' not in st.session_state:
         st.session_state.etape_commande = 'panier'
 
-# --------------------------
-# DONNÉES PRODUITS
-# --------------------------
-PRODUITS = {
-    "ProBook": {
-        "prix": 899,
-        "specs": "💻 i7-1165G7 | 16GB RAM | 512GB SSD | Windows 11 Pro",
-        "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8",
-        "badge": "new"
-    },
-    "X-Treme": {
-        "prix": 1299,
-        "specs": "🎮 RTX 3060 | i7-12700H | 32GB RAM | 1TB SSD",
-        "image": "https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg",
-        "badge": "discount"
-    },
-    "Mini PC": {
-        "prix": 499,
-        "specs": "🖥️ Celeron J3455 | 8GB RAM | 128GB SSD | Windows 10 Pro",
-        "image": "https://www.electronicscritique.com/wp-content/uploads/2020/11/ACEPC-Mini-PC-Windows-10-Pro-Celeron-J3455-1024x827.jpg",
-        "badge": "new"
-    }
-}
 
-# --------------------------
-# FONCTIONS PANIER
-# --------------------------
-def ajouter_au_panier(produit):
-    for item in st.session_state.panier:
-        if item['nom'] == produit:
-            item['quantite'] += 1
-            st.success(f"Quantité mise à jour pour {produit}!")
-            return
-    
-    st.session_state.panier.append({
-        'nom': produit,
-        'prix': PRODUITS[produit]["prix"],
-        'quantite': 1
-    })
-    st.success(f"{produit} ajouté au panier!")
-
-def calculer_total():
-    return sum(item['prix'] * item['quantite'] for item in st.session_state.panier)
 
 # --------------------------
 # PROCESSUS COMMANDE
 # --------------------------
-def afficher_etape_panier():
-    st.header("🛒 Votre Panier")
-    
-    if not st.session_state.panier:
-        st.warning("Votre panier est vide")
-        return False
-    
-    df = pd.DataFrame(st.session_state.panier)
-    df['Total'] = df['prix'] * df['quantite']
-    
-    # Affichage tableau interactif
-    edited_df = st.data_editor(
-        df,
-        column_config={
-            "nom": "Produit",
-            "prix": st.column_config.NumberColumn("Prix (€)", format="%d €"),
-            "quantite": st.column_config.NumberColumn("Quantité", min_value=1),
-            "Total": st.column_config.NumberColumn("Total (€)", format="%d €")
-        },
-        hide_index=True,
-        use_container_width=True
-    )
+
     
     # Mise à jour des quantités
     for i, row in edited_df.iterrows():
@@ -462,24 +399,6 @@ def afficher_confirmation():
         st.session_state.etape_commande = 'panier'
         st.rerun()
 
-# --------------------------
-# AFFICHAGE PRODUITS
-# --------------------------
-def afficher_catalogue():
-    st.header("💻 Notre Catalogue")
-    cols = st.columns(3)
-    
-    for i, (produit, details) in enumerate(PRODUITS.items()):
-        with cols[i % 3]:
-            with st.container(border=True):
-                st.image(details["image"], use_column_width=True)
-                st.subheader(produit)
-                st.markdown(details["specs"])
-                st.markdown(f"**{details['prix']} €**")
-                
-                if st.button(f"Ajouter au panier - {produit}", key=f"add_{produit}"):
-                    ajouter_au_panier(produit)
-                    st.rerun()
 
 # --------------------------
 # APPLICATION PRINCIPALE
