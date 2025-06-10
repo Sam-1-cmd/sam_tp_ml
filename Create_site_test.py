@@ -60,8 +60,6 @@ with cols[2]:
     st.write("💰 **Prix :** 499 €")
     st.write("🧳 Ultra-portable, idéal pour les déplacements.")
 
-
-
 st.markdown("""
     <style>
     .product-card {
@@ -96,12 +94,10 @@ st.markdown("""
         border-radius: 3px;
     }
     .product-image {
-    width: 100%;
-    max-height: 100px;
-    object-fit: contain;
-    margin-bottom: 10px;
-}
-
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        margin-bottom: 10px;
     }
     .price-old {
         text-decoration: line-through;
@@ -128,6 +124,7 @@ st.markdown("""
         <p class="stars">★★★★☆</p>
         <p>💻 16GB RAM | 1 TO | Windows 11</p>
     </div>
+""", unsafe_allow_html=True) c'est une carte produit, mais l'image ets mal dimensionnée et on ne voit donc pas l'image 
 """, unsafe_allow_html=True)
 
 
