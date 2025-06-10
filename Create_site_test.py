@@ -41,9 +41,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- Catalogue de produits ---
-st.header("🛒 Nos produits")
-
-import streamlit as st
 
 # ---- Initialisation ----
 def init_panier():
@@ -147,7 +144,7 @@ def creer_carte_produit(produit, prix, specs, image, badge=None):
             ajouter_au_panier(produit, prix)
 
 def afficher_catalogue():
-    st.header("🎯 Nos Produits Informatiques")
+    st.header("🛒 Nos produits informatique ")
     cols = st.columns(3)
     
     with cols[0]:
