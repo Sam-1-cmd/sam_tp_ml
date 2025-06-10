@@ -96,7 +96,7 @@ st.markdown("""
         border-radius: 3px;
     }
     .product-image {
-    width: 100%;
+    width: 50%;
     max-height: 200px;
     object-fit: contain;
     margin-bottom: 10px;
