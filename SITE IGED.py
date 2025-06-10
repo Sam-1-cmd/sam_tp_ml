@@ -18,7 +18,6 @@ st.markdown(
                    transform: translate(-50%, -50%); 
                    background-color: rgba(0.5, 0.5, 0.5, 0.5); 
                    padding: 20px; border-radius: 10px;">
-    </div>
     """,
     unsafe_allow_html=True
 )
