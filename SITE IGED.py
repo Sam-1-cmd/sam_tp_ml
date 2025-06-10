@@ -6,7 +6,7 @@ import pandas as pd
 
 # Configuration de la page
 st.set_page_config(
-    page_title="IGED - Innovation Groupe Étude Digitale",
+    #page_title="IGED - Innovation Groupe Étude Digitale",
     page_icon="📚",
     layout="wide"
 )
@@ -18,7 +18,7 @@ st.markdown(
                    transform: translate(-50%, -50%); 
                    background-color: rgba(0, 0, 0, 0.5); 
                    padding: 20px; border-radius: 10px;">
-            Bienvenue sur mon application Streamlit 🚀
+            IGED - Innovation Groupe Étude Digitale
         </h1>
     </div>
     """,
