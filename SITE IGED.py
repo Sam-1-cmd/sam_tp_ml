@@ -16,7 +16,7 @@ st.markdown(
         <img src="https://urls.fr/ZmO3Ro" style="width: 50%; height: auto; border-radius: 10px;" />
         <h1 style="position: absolute; top: 50%; left: 50%; 
                    transform: translate(-50%, -50%); 
-                   background-color: rgba(0, 0, 0, 0.5); 
+                   background-color: rgba(0.5, 0.5, 0.5, 0.5); 
                    padding: 20px; border-radius: 10px;">
                    Innovation Groupe Étude Digitale
         </h1>
