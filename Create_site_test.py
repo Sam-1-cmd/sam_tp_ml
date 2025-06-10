@@ -60,6 +60,75 @@ with cols[2]:
     st.write("💰 **Prix :** 499 €")
     st.write("🧳 Ultra-portable, idéal pour les déplacements.")
 
+
+
+st.markdown("""
+    <style>
+    .product-card {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 10px;
+        width: 100%;
+        text-align: center;
+        background: white;
+        position: relative;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .badge-new {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #00acc1;
+        color: white;
+        padding: 3px 8px;
+        font-size: 12px;
+        border-radius: 3px;
+    }
+    .badge-discount {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #ffa07a;
+        color: white;
+        padding: 3px 8px;
+        font-size: 12px;
+        border-radius: 3px;
+    }
+    .product-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+    .price-old {
+        text-decoration: line-through;
+        color: #999;
+        font-size: 14px;
+    }
+    .price-new {
+        font-size: 18px;
+        font-weight: bold;
+        color: #2e7d32;
+    }
+    .stars {
+        color: #ffc107;
+        font-size: 16px;
+    }
+    </style>
+
+    <div class="product-card">
+        <div class="badge-new">NOUVEAU</div>
+        <div class="badge-discount">-60,00 €</div>
+        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image"/>
+        <p><strong>DELL LATITUDE 5500 I5-8365U</strong></p>
+        <p><span class="price-old">449,00 €</span> <span class="price-new">389,00 €</span></p>
+        <p class="stars">★★★★☆</p>
+        <p>💻 16GB RAM | 1 TO | Windows 11</p>
+    </div>
+""", unsafe_allow_html=True)
+
+
 # --- Formulaire de contact ---
 
 st.header("Contactez-nous")
