@@ -265,6 +265,21 @@ def init_session():
     if st.button("Passer la commande", type="primary"):
         st.session_state.etape_commande = 'livraison'
         st.rerun()
+def afficher_catalogue():
+    st.header("💻 Notre Catalogue")
+    cols = st.columns(3)
+    
+    for i, (produit, details) in enumerate(PRODUITS.items()):
+        with cols[i % 3]:
+            with st.container(border=True):
+                st.image(details["image"], use_column_width=True)
+                st.subheader(produit)
+                st.markdown(details["specs"])
+                st.markdown(f"**{details['prix']} €**")
+                
+                if st.button(f"Ajouter au panier - {produit}", key=f"add_{produit}"):
+                    ajouter_au_panier(produit)
+                    st.rerun()
 
 def afficher_etape_livraison():
     st.header("📦 Informations de livraison")
