@@ -118,7 +118,7 @@ st.markdown("""
     <div class="product-card">
         <div class="badge-new">NOUVEAU</div>
         <div class="badge-discount">-60,00 €</div>
-        <img src="https://i5.walmartimages.ca/images/Enlarge/729/870/6000199729870.jpg" class="product-image"/>
+        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8" class="product-image"/>
         <p><strong>DELL LATITUDE 5500 I5-8365U</strong></p>
         <p><span class="price-old">449,00 €</span> <span class="price-new">389,00 €</span></p>
         <p class="stars">★★★★☆</p>
