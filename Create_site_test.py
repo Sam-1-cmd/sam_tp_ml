@@ -47,15 +47,28 @@ with cols[2]:
     st.write("🧳 Ultra-portable, idéal pour les déplacements.")
 
 # --- Formulaire de contact ---
-st.header("📬 Contactez-nous")
-with st.form(key='contact_form'):
-    nom = st.text_input("Nom")
-    email = st.text_input("Email")
-    message = st.text_area("Votre message")
-    envoyer = st.form_submit_button("Envoyer")
 
-    if envoyer:
+st.header("Contactez-nous")
+
+with st.form(key='contact_form'):
+    name = st.text_input("Nom")
+    email = st.text_input("Email")
+    message = st.text_area("Message")
+
+    submit_button = st.form_submit_button(label='Envoyer')
+
+    if submit_button:
         st.success("✅ Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.")
+        st.markdown(f"""
+            <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://ton-site.com/merci">
+                <input type="text" name="Nom" value="{name}" hidden>
+                <input type="email" name="Email" value="{email}" hidden>
+                <textarea name="Message" hidden>{message}</textarea>
+                <button type="submit">Envoyer</button>
+            </form>
+        """, unsafe_allow_html=True)
 
 # --- Pied de page ---
 st.markdown("""
