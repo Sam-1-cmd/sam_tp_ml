@@ -6,7 +6,6 @@ import pandas as pd
 
 # Configuration de la page
 st.set_page_config(
-    #page_title="IGED - Innovation Groupe Étude Digitale",
     page_icon="📚",
     layout="wide"
 )
