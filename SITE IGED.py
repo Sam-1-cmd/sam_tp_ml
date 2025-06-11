@@ -8,28 +8,139 @@ from email.mime.application import MIMEApplication
 import smtplib
 import os
 
+
 # Configuration de la page
 st.set_page_config(
-    page_title="IGED Innovation groupe étude digitale",
-    page_icon="📚",
-    layout="wide"
+    page_title="IGED - Innovation Groupe Étude Digitale",
+    page_icon="🎓",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-# Bannière avec image
-st.markdown(
-    """
-    <div style="position: relative; text-align: center; color: white; margin-bottom: 2rem;">
-        <img src="https://urls.fr/ZmO3Ro" alt="Image d'accueil" style="width: 90%; height: auto; border-radius: 10px; display: block; margin: 0 auto;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-                   background-color: rgba(0, 0, 0, 0.6); 
-                   padding: 20px; border-radius: 10px; width: 80%; max-width: 600px;">
-            <h1 style="margin: 0; font-size: 2.5rem;">Bienvenue sur notre plateforme</h1>
-            <p style="margin: 10px 0 0; font-size: 1.2rem;">Cours particuliers sur mesure</p>
+# ---- Bannière Supérieure Améliorée ----
+st.markdown("""
+<div style="background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%); 
+            padding: 3rem 1rem; border-radius: 10px; color: white; 
+            text-align: center; margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    <h1 style="margin: 0; font-size: 3rem; font-weight: 700;">IGED</h1>
+    <p style="font-size: 1.5rem; margin: 0.5rem 0 1.5rem 0;">
+    Innovation Groupe Étude Digitale
+    </p>
+    <div style="display: flex; justify-content: center; gap: 1.5rem;">
+        <a href="#formule" style="background: #ff6b6b; border: none; padding: 0.75rem 2rem; 
+                      border-radius: 30px; color: white; text-decoration: none;
+                      font-weight: 600; cursor: pointer;">Nos Formules</a>
+        <a href="#contact" style="background: rgba(255,255,255,0.2); border: 2px solid white; 
+                      padding: 0.75rem 2rem; border-radius: 30px; color: white; 
+                      text-decoration: none; font-weight: 600; cursor: pointer;">Contact Rapide</a>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# ---- Layout Principal (2 Colonnes) ----
+col_left, col_right = st.columns([3, 2], gap="large")
+
+with col_left:
+    # Section Présentation
+    st.markdown("""
+    ## 📚 Votre réussite, notre priorité
+    
+    **IGED** combine expertise pédagogique et solutions digitales pour :
+    - 🎯 **Programmes personnalisés** avec suivi algorithmique
+    - 👨‍🏫 **+50 professeurs** certifiés (95% de satisfaction)
+    - 📈 **92% de réussite** aux examens 2023
+    - 💻 **Plateforme interactive** disponible 24h/24
+    """)
+    
+    # Témoignage
+    st.markdown("""
+    <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;
+                border-left: 4px solid #6e48aa;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" 
+                 style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover;">
+            <div>
+                <p style="font-weight: bold; margin: 0 0 0.2rem 0; font-size: 1.1rem;">Amina K., 16 ans</p>
+                <p style="margin: 0; color: #555;">"Avec IGED, ma moyenne en maths est passée de 8 à 15 en 3 mois !"</p>
+            </div>
         </div>
     </div>
-    """,
-    unsafe_allow_html=True
-)
+    """, unsafe_allow_html=True)
+    
+    # Vidéo explicative
+    st.video("https://youtu.be/5agcs8--Szo?si=4tg2qHFHuiRqvxrk")
+
+with col_right:
+    # Formulaire Compact
+    with st.form(key='contact_rapide'):
+        st.markdown("### ✉️ Demande de contact")
+        name = st.text_input("Nom complet*")
+        niveau = st.selectbox("Niveau scolaire*", 
+                            ["Primaire", "Collège", "Lycée", "Supérieur"])
+        phone = st.text_input("Téléphone*")
+        submitted = st.form_submit_button("Être rappelé(e)")
+        if submitted:
+            if name and phone:
+                st.success(f"Merci {name.split()[0]}! Un conseiller vous contactera pour le {niveau}.")
+            else:
+                st.error("Veuillez remplir les champs obligatoires (*)")
+    
+    # Carte des centres
+    with st.expander("📍 Nos centres en Côte d'Ivoire", expanded=True):
+        st.map(data=pd.DataFrame({
+            'lat': [5.3167, 5.3541, 7.6906],  # Yamoussoukro/Abidjan/Bouaké
+            'lon': [-4.0333, -4.0016, -5.0303],
+            'name': ['IGED Yamoussoukro', 'IGED Abidjan', 'IGED Bouaké']
+        }), zoom=6)
+    
+    # Assistant IA
+    st.markdown("""
+    <div style="background: #f0f2f6; padding: 1.25rem; border-radius: 10px; margin-top: 1.5rem;">
+        <h4 style="margin-top: 0;">🤖 Assistant IGED</h4>
+        <p>Obtenez une réponse immédiate à vos questions :</p>
+        <ul style="margin-bottom: 0;">
+            <li>Disponibilité des professeurs</li>
+            <li>Tarifs et financements</li>
+            <li>Méthodes pédagogiques</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("Poser une question →", key="assistant_btn"):
+        st.session_state.show_chat = True
+
+# ---- Pied de Page ----
+st.markdown("---")
+footer_cols = st.columns(3)
+with footer_cols[0]:
+    st.markdown("**IGED**  \nInnovation Groupe Étude Digitale  \n© 2024 Tous droits réservés")
+with footer_cols[1]:
+    st.markdown("📞 [07 45 50 24 52](tel:+2250745502452)  \n✉️ [contact@iged-ci.com](mailto:contact@iged-ci.com)")
+with footer_cols[2]:
+    st.markdown("[Facebook](https://facebook.com) | [Instagram](https://instagram.com) | [LinkedIn](https://linkedin.com)")
+
+# ---- CSS Personnalisé ----
+st.markdown("""
+<style>
+    [data-testid="stForm"] {
+        background: #ffffff;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .stButton>button {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+    .stVideo {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # CSS personnalisé
 def local_css(file_name):
