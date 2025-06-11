@@ -112,7 +112,7 @@ def get_chatgpt_response(user_message: str) -> str:
                 st.write(output)
 
         elif option == "Afficher une aide":
-        st.info("Tape ta question pour interagir avec l'IA.")
+             st.info("Tape ta question pour interagir avec l'IA.")
 
         elif option == "Quitter":
              st.warning("Au revoir 👋")
