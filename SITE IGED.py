@@ -46,7 +46,7 @@ if choice == "Accueil":
     st.header("Votre réussite, notre priorité")
     st.image("https://www.entreprenanteafrique.com/wp-content/uploads/2019/09/Enko-John-Wesley_Abidjan-1024x630.jpg", use_container_width=True)
     
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     with col1:
         st.markdown("""
