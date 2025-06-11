@@ -83,6 +83,30 @@ if choice == "Accueil":
                 </form>
                 """, unsafe_allow_html=True)
                 st.success("Demande envoyée! Nous vous contacterons sous 48h.")
+                
+    with col3:
+        import streamlit as st
+        import openai
+
+        openai.api_key = "YOUR_OPENAI_API_KEY"  # Mets ta clé ici
+
+        st.title("Chatbot IA – ELECTRO SOLUT")
+
+       question = st.text_input("Pose ta question ici")
+
+       if question:
+            response = openai.ChatCompletion.create(
+              model="gpt-3.5-turbo",  # ou gpt-4
+              messages=[
+                {"role": "system", "content": "Tu es un assistant pour le site ELECTRO SOLUT."},
+                {"role": "user", "content": question}
+                  ]
+             )
+    st.write("Réponse :", response['choices'][0]['message']['content'])
+
+        
+        
+
 
 # Section Nos Services
 elif choice == "Nos Services":
@@ -212,7 +236,7 @@ elif choice == "Contact":
         st.markdown("""
         **IGED - Innovation Groupe Étude Digitale**
         📍 YAMOUSSOKRO, CÔTE D'IVOIRE
-        📞 07 45 50 24 523
+        📞 07 45 50 24 52
         ✉️ brousybah08@gmail.com
         📞 Vous pouvez aussi nous appeler : [**Appeler maintenant**](tel:+3374502452)     
         """)
