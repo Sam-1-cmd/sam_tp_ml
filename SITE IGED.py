@@ -1,322 +1,111 @@
 import streamlit as st
-from PIL import Image
-import pandas as pd
 import openai
+
 # Configuration de la page
 st.set_page_config(
-    page_title="IGED Innovation groupe étude digitale",
-    page_icon="📚",
+    page_title="Institut IGED",
+    page_icon="📘",
     layout="wide"
 )
 
-st.markdown(
-    """
-    <div style="position: relative; text-align: center; color: white; margin-bottom: 2rem;">
-        <img src="https://urls.fr/ZmO3Ro" alt="Image d'accueil" style="width: 90%; height: auto; border-radius: 10px; display: block; margin: 0 auto;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-                   background-color: rgba(0, 0, 0, 0.6); 
-                   padding: 20px; border-radius: 10px; width: 80%; max-width: 600px;">
-            <h1 style="margin: 0; font-size: 2.5rem;">Bienvenue sur notre plateforme</h1>
-            <p style="margin: 10px 0 0; font-size: 1.2rem;">Cours particuliers sur mesure</p>
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-# CSS personnalisé
-def local_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-local_css("style.css")
-
-# Header avec logo et navigation
-col1, col2, col3 = st.columns([1,2,1])
-with col2:
-    st.title("IGED")
-    st.subheader("Innovation Groupe Étude Digitale")
-
-# Navigation
-menu = ["Accueil", "Nos Services", "Nos Professeurs", "Tarifs", "Contact", "Espace Élève"]
-choice = st.sidebar.selectbox("Navigation", menu)
-
-# Section Accueil
-if choice == "Accueil":
-    st.header("Votre réussite, notre priorité")
-    st.image("https://www.entreprenanteafrique.com/wp-content/uploads/2019/09/Enko-John-Wesley_Abidjan-1024x630.jpg", use_container_width=True)
-    
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.markdown("""
-        ### Bienvenue chez IGED
-
-        **IGED - Innovation Groupe Étude Digitale** est un centre de soutien scolaire innovant
-        qui combine expertise pédagogique et solutions digitales pour offrir un accompagnement
-        personnalisé à chaque élève.
-
-        - 📈 Résultats garantis
-        - 👩‍🏫 Professeurs qualifiés
-        - 💻 Plateforme digitale interactive
-        - 🏆 95% de satisfaction
-        """)
-
-    with col2:
-        with st.form(key='contact_form'):
-            st.write("Programmer un rendez-vous avec un collaborateur IGED")
-            name = st.text_input("Nom de l'élève")
-            niveau = st.selectbox("Niveau scolaire", ["Primaire", "Collège", "Lycée", "Supérieur"])
-            matiere = st.text_input("Matière(s) concernée(s)")
-            phone = st.text_input("Téléphone")
-            email = st.text_input("Email")
-            submitted = st.form_submit_button("Envoyer la demande")
-            if submitted:
-                st.markdown(f"""
-                <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://ton-site.com/merci">
-                <input type="text" name="Nom" value="{name}" hidden>
-                <input type="email" name="Email" value="{email}" hidden>
-                <textarea name="Message" hidden>{message}</textarea>
-                <button type="submit">Envoyer</button>
-                </form>
-                """, unsafe_allow_html=True)
-                st.success("Demande envoyée! Nous vous contacterons sous 48h.")
-
+# Configuration de l'API OpenAI
 openai.api_key = st.secrets["OPENAI_API_KEY"]
+# Pour un test local, tu peux temporairement remplacer par :
+# openai.api_key = "ta_clé_personnelle"
 
-def get_chatgpt_response(user_message: str) -> str:
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": user_message}]
-        )
-        return response["choices"][0]["message"]["content"]
-    except Exception as e:
-        st.error(f"Erreur API OpenAI : {e}")
-        return "Une erreur est survenue en contactant ChatGPT."
+# Fonction pour obtenir une réponse de ChatGPT
+def get_chatgpt_response(prompt):
+    completions = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=prompt,
+        max_tokens=150
+    )
+    message = completions.choices[0].text.strip()
+    return message
 
+# Titre principal
+st.title("Bienvenue à l'Institut IGED 🎓")
+st.write("Institut de soutien scolaire et d’excellence académique.")
 
-    with col3:
-        st.title("Assistant IA")
+# Barre de menu horizontale
+menu = st.selectbox("Navigation", ["Accueil", "Nos services", "Prendre un rendez-vous", "Contact"])
 
-        user_input = st.text_input("Pose ta question à l'IA 👇")
-
-        option = st.selectbox("Choisis une action :", ["Poser une question", "Afficher une aide", "Quitter"])
-
-        if option == "Poser une question":
-             user_input = st.text_input("Écris ta question ici")
-             if user_input:
-                output = get_chatgpt_response(user_input)
-                st.write(output)
-
-        elif option == "Afficher une aide":
-             st.info("Tape ta question pour interagir avec l'IA.")
-
-        elif option == "Quitter":
-             st.warning("Au revoir 👋")
-
-# Section Nos Services
-elif choice == "Nos Services":
-    st.header("Nos Solutions Pédagogiques")
-    tabs = st.tabs(["Cours Particuliers", "Stages Intensifs", "Aide aux Devoirs", "Préparation Examens"])
-
-    with tabs[0]:
-        st.subheader("Cours Particuliers à Domicile ou en Ligne")
-        st.markdown("""
-         - 🔄 **Suivi régulier** ou ⏱️ **ponctuel**  
-         - 🌍 **Toutes matières**, 🎓 **tous niveaux**  
-         - 🕒 **Créneaux flexibles** (matin/soir/week-end)  
-         - 🔍 **Bilan pédagogique initial** gratuit  
-         - ✉️ **Compte-rendu détaillé** après chaque séance  
-        """)
-        st.markdown(
-            """
-             <div style="text-align: center;">
-             <img src="https://tewmoutew.com/img/photos/2021-10-02-201830_bde15679.jpg" 
-             style="width: 400px; border-radius: 10px;" />
-              <p style="font-style: italic;">Nos professeurs se déplacent à votre domicile</p>
-            </div>
-           """,
-         unsafe_allow_html=True
-        )
-
-    with tabs[1]:
-        st.subheader("Stages Intensifs pendant les Vacances")
-        st.markdown("""
-        - Stages de révision
-        - Stages de remise à niveau
-        - Préparation aux examens (Brevet, Bac, Concours)
-        - En petits groupes ou individuels
-        - 10h à 30h par semaine
-        """)
-
-    with tabs[2]:
-        st.subheader("Aide aux Devoirs")
-        st.markdown("""
-        - Encadrement quotidien
-        - Méthodologie de travail
-        - Organisation du temps
-        - Pour les élèves du primaire au collège
-        """)
-
-    with tabs[3]:
-        st.subheader("Préparation aux Examens")
-        st.markdown("""
-        - BEPC
-        - Baccalauréat toutes séries 
-        - Concours post-bac
-        - Examens blancs corrigés
-        - Simulation d'oraux
-        """)
-
-# Section Nos Professeurs
-elif choice == "Nos Professeurs":
-    st.header("Notre Équipe Pédagogique")
-    profs = pd.DataFrame({
-        'Photo': ["prof1.jpg", "prof2.jpg", "prof3.jpg"],
-        'Nom': ["Marie Dupont", "Jean Martin", "Sophie Leroy"],
-        'Matières': ["Mathématiques/Physique", "Français/Philosophie", "Anglais/Espagnol"],
-        'Expérience': ["15 ans d'expérience, ancienne professeure en CPGE",
-                      "10 ans d'expérience, correcteur du bac",
-                      "Bilingue, 8 ans d'expérience en lycée international"],
-        'Diplômes': ["Agrégée de Mathématiques", "Docteur en Lettres Modernes", "Master en Langues Étrangères"]
-    })
-
-    for i in range(len(profs)):
-        col1, col2 = st.columns([1, 3])
-        with col1:
-            st.image(profs['Photo'][i], width=150)
-        with col2:
-            st.subheader(profs['Nom'][i])
-            st.write(f"**Matières:** {profs['Matières'][i]}")
-            st.write(f"**Expérience:** {profs['Expérience'][i]}")
-            st.write(f"**Diplômes:** {profs['Diplômes'][i]}")
-        st.markdown("---")
-
-# Section Tarifs
-elif choice == "Tarifs":
-    st.header("Nos Tarifs")
-    st.markdown("""
-    ### Forfaits Cours Particuliers
+# Page d'accueil
+if menu == "Accueil":
+    st.header("À propos de nous")
+    st.write("""
+        IGED est un institut de soutien scolaire pour les élèves du primaire au lycée.
+        Nous mettons l'accent sur la réussite, la rigueur, et la motivation.
     """)
+    
+    st.image("https://images.unsplash.com/photo-1577896851231-70ef18881754", caption="Nos élèves en cours", use_column_width=True)
 
+    st.subheader("Notre équipe pédagogique")
     col1, col2, col3 = st.columns(3)
-
     with col1:
-        st.subheader("Découverte")
-        st.write("💶 35€/h")
-        st.write("✅ 1 à 5h")
-        st.write("✅ Bilan initial")
-        st.write("✅ Suivi mensuel")
-
+        st.image("https://randomuser.me/api/portraits/women/1.jpg", caption="Mme. Keïta – Mathématiques")
     with col2:
-        st.subheader("Progrès")
-        st.write("💶 32€/h")
-        st.write("✅ 10h à 20h")
-        st.write("✅ Programme personnalisé")
-        st.write("✅ 1 examen blanc offert")
-
+        st.image("https://randomuser.me/api/portraits/men/2.jpg", caption="M. N’Guessan – Physique-Chimie")
     with col3:
-        st.subheader("Excellence")
-        st.write("💶 30€/h")
-        st.write("✅ 30h et plus")
-        st.write("✅ Coordinateur pédagogique")
-        st.write("✅ 2 examens blancs offerts")
+        st.image("https://randomuser.me/api/portraits/women/3.jpg", caption="Mme. Coulibaly – Français")
 
+# Page Services
+elif menu == "Nos services":
+    st.header("Nos services 📚")
     st.markdown("""
-    ---
-    ### Autres Services
-    - **Aide aux devoirs:** 25€/h
-    - **Stages intensifs:** 250€ la semaine (10h)
-    - **Préparation examens:** 40€/h (spécial concours)
-
-    *50% de réduction d'impôt sur les cours à domicile*
+    - **Soutien scolaire personnalisé**
+    - **Préparation au brevet et au baccalauréat**
+    - **Cours de langues (Anglais, Espagnol, etc.)**
+    - **Stages de vacances**
     """)
 
-# Section Contact
-elif choice == "Contact":
-    st.header("Contactez-nous")
-    col1, col2 = st.columns(2)
+# Page Prendre un rendez-vous
+elif menu == "Prendre un rendez-vous":
+    st.header("Réserver un rendez-vous 🗓️")
 
+    with st.form(key='rendez_vous_form'):
+        name = st.text_input("Nom")
+        email = st.text_input("Email")
+        date = st.date_input("Date souhaitée")
+        heure = st.time_input("Heure")
+        message = st.text_area("Message ou commentaires")
+        submit = st.form_submit_button("Envoyer")
+
+        if submit:
+            st.success(f"Merci {name}, votre demande de rendez-vous a bien été enregistrée !")
+
+# Page Contact + Assistant IA
+elif menu == "Contact":
+    col1, col2, col3 = st.columns([1, 1, 1])
+
+    # Bloc Contact
     with col1:
-        st.subheader("Nos Coordonnées")
-        st.markdown("""
-        **IGED - Innovation Groupe Étude Digitale**
-        📍 YAMOUSSOKRO, CÔTE D'IVOIRE
-        📞 07 45 50 24 52
-        ✉️ brousybah08@gmail.com
-        📞 Vous pouvez aussi nous appeler : [**Appeler maintenant**](tel:+3374502452)     
-        """)
-        st.markdown("""
-        **Horaires d'ouverture:**
-        Lundi-Vendredi: 9h-19h
-        Samedi: 9h-17h     
-        """)
-
-        st.subheader("Nos Agences")
-        st.write("📍 ABIDJAN | YAMOUSSOUKO | BOUAKE ")
-
-    with col2:
-        st.subheader("Formulaire de Contact")
+        st.header("Contactez-nous 📞")
         with st.form(key='contact_form'):
-            nom = st.text_input("Nom*")
-            email = st.text_input("Email*")
-            telephone = st.text_input("Téléphone")
-            sujet = st.selectbox("Sujet", ["Demande d'information", "Inscription", "Recrutement", "Autre"])
-            message = st.text_area("Message*")
-            submitted = st.form_submit_button("Envoyer")
-            if submitted:
-                if nom and email and message:
-                    st.success("Message envoyé! Nous vous répondrons dans les 48h.")
-                    st.markdown(f"""
-                    <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_next" value="https://ton-site.com/merci">
-                    <input type="text" name="Nom" value="{nom}" hidden>
-                    <input type="email" name="Email" value="{email}" hidden>
-                    <textarea name="Message" hidden>{message}</textarea>
-                    <button type="submit">Envoyer</button>
-                    </form>
-                    """, unsafe_allow_html=True)
-                else:
-                    st.error("Veuillez remplir les champs obligatoires (*)")
+            name = st.text_input("Nom complet")
+            email = st.text_input("Adresse Email")
+            message = st.text_area("Votre message")
+            submit_button = st.form_submit_button("Envoyer")
+            if submit_button:
+                st.success("Votre message a été envoyé avec succès.")
 
-# Section Espace Élève
-elif choice == "Espace Élève":
-    st.header("Espace Élève IGED")
-    tab1, tab2 = st.tabs(["Connexion", "Première visite"])
-
-    with tab1:
-        with st.form("login"):
-            st.write("Connectez-vous à votre espace")
-            username = st.text_input("Identifiant")
-            password = st.text_input("Mot de passe", type="password")
-            connect = st.form_submit_button("Se connecter")
-            if connect:
-                st.warning("Cette fonctionnalité sera disponible dans la version finale")
-
-    with tab2:
-        st.write("""
-        ### Nouveau chez IGED ?
-
-        Notre plateforme digitale vous permet de:
-        - Accéder à vos cours en ligne
-        - Consulter vos progrès
-        - Échanger avec votre professeur
-        - Télécharger des ressources
-
-        **Demandez vos identifiants à votre conseiller pédagogique**
+    # Bloc Infos pratiques
+    with col2:
+        st.header("Informations pratiques")
+        st.markdown("""
+        **Adresse :** 10 Rue de l'Éducation, Abidjan  
+        **Téléphone :** +225 01 23 45 67 89  
+        **Email :** contact@institutiged.ci  
+        **Horaires :** Lundi - Samedi, 8h - 18h
         """)
-        st.image("platforme.jpg", width=500)
 
-# Pied de page
-st.markdown("---")
-footer_col1, footer_col2, footer_col3 = st.columns(3)
-with footer_col1:
-    st.write("© 2023 IGED - Tous droits réservés")
-with footer_col2:
-    st.write("Mentions légales | CGV | Politique de confidentialité")
-with footer_col3:
-    st.write("Suivez-nous: [Facebook] [Instagram] [LinkedIn]")
+    # Bloc Assistant IA
+    with col3:
+        st.header("Assistant IA 🤖")
+        prompt = st.text_input("Posez votre question")
+        if st.button("Demander à l'IA"):
+            if prompt:
+                response = get_chatgpt_response(prompt)
+                st.success(response)
+            else:
+                st.warning("Veuillez saisir une question avant d’envoyer.")
