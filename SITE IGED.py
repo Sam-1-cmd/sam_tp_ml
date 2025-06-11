@@ -103,12 +103,19 @@ def get_chatgpt_response(user_message: str) -> str:
 
         user_input = st.text_input("Pose ta question à l'IA 👇")
 
-        if user_input:
-              output = get_chatgpt_response(user_input)
-              st.write("🧠 Réponse de l'IA :")
-              st.write(output)
+        option = st.selectbox("Choisis une action :", ["Poser une question", "Afficher une aide", "Quitter"])
 
+        if option == "Poser une question":
+             user_input = st.text_input("Écris ta question ici")
+             if user_input:
+                output = get_chatgpt_response(user_input)
+                st.write(output)
 
+        elif option == "Afficher une aide":
+        st.info("Tape ta question pour interagir avec l'IA.")
+
+        elif option == "Quitter":
+             st.warning("Au revoir 👋")
 
 # Section Nos Services
 elif choice == "Nos Services":
