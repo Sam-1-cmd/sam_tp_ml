@@ -25,13 +25,13 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 # CSS personnalisé
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 local_css("style.css")
-# Vous pouvez créer un fichier CSS séparé
 
 # Header avec logo et navigation
 col1, col2, col3 = st.columns([1,2,1])
@@ -46,11 +46,8 @@ choice = st.sidebar.selectbox("Navigation", menu)
 # Section Accueil
 if choice == "Accueil":
     st.header("Votre réussite, notre priorité")
-
-    # Bannière
-    st.image("https://www.entreprenanteafrique.com/wp-content/uploads/2019/09/Enko-John-Wesley_Abidjan-1024x630.jpg", use_container_width=True)  
-    # Remplacez par votre image
-
+    st.image("https://www.entreprenanteafrique.com/wp-content/uploads/2019/09/Enko-John-Wesley_Abidjan-1024x630.jpg", use_container_width=True)
+    
     col1, col2 = st.columns(2)
 
     with col1:
@@ -68,9 +65,8 @@ if choice == "Accueil":
         """)
 
     with col2:
-        # Formulaire de contact rapide
         with st.form(key='contact_form'):
-            st.write("Programmer un rendez-vous avec un collaborateur IGED ")
+            st.write("Programmer un rendez-vous avec un collaborateur IGED")
             name = st.text_input("Nom de l'élève")
             niveau = st.selectbox("Niveau scolaire", ["Primaire", "Collège", "Lycée", "Supérieur"])
             matiere = st.text_input("Matière(s) concernée(s)")
@@ -78,22 +74,21 @@ if choice == "Accueil":
             email = st.text_input("Email")
             submitted = st.form_submit_button("Envoyer la demande")
             if submitted:
-                        st.markdown(f"""
-                        <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_next" value="https://ton-site.com/merci">
-                        <input type="text" name="Nom" value="{name}" hidden>
-                        <input type="email" name="Email" value="{email}" hidden>
-                        <textarea name="Message" hidden>{message}</textarea>
-                       <button type="submit">Envoyer</button>
-                       </form>
-                        """, unsafe_allow_html=True)
+                st.markdown(f"""
+                <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://ton-site.com/merci">
+                <input type="text" name="Nom" value="{name}" hidden>
+                <input type="email" name="Email" value="{email}" hidden>
+                <textarea name="Message" hidden>{message}</textarea>
+                <button type="submit">Envoyer</button>
+                </form>
+                """, unsafe_allow_html=True)
                 st.success("Demande envoyée! Nous vous contacterons sous 48h.")
 
 # Section Nos Services
 elif choice == "Nos Services":
     st.header("Nos Solutions Pédagogiques")
-
     tabs = st.tabs(["Cours Particuliers", "Stages Intensifs", "Aide aux Devoirs", "Préparation Examens"])
 
     with tabs[0]:
@@ -114,7 +109,7 @@ elif choice == "Nos Services":
             </div>
            """,
          unsafe_allow_html=True
-              )
+        )
 
     with tabs[1]:
         st.subheader("Stages Intensifs pendant les Vacances")
@@ -148,8 +143,6 @@ elif choice == "Nos Services":
 # Section Nos Professeurs
 elif choice == "Nos Professeurs":
     st.header("Notre Équipe Pédagogique")
-
-    # Exemple de données - à remplacer par vos professeurs
     profs = pd.DataFrame({
         'Photo': ["prof1.jpg", "prof2.jpg", "prof3.jpg"],
         'Nom': ["Marie Dupont", "Jean Martin", "Sophie Leroy"],
@@ -163,7 +156,7 @@ elif choice == "Nos Professeurs":
     for i in range(len(profs)):
         col1, col2 = st.columns([1, 3])
         with col1:
-            st.images(profs['Photo'][i], width=150)
+            st.image(profs['Photo'][i], width=150)
         with col2:
             st.subheader(profs['Nom'][i])
             st.write(f"**Matières:** {profs['Matières'][i]}")
@@ -174,7 +167,6 @@ elif choice == "Nos Professeurs":
 # Section Tarifs
 elif choice == "Tarifs":
     st.header("Nos Tarifs")
-
     st.markdown("""
     ### Forfaits Cours Particuliers
     """)
@@ -215,7 +207,6 @@ elif choice == "Tarifs":
 # Section Contact
 elif choice == "Contact":
     st.header("Contactez-nous")
-
     col1, col2 = st.columns(2)
 
     with col1:
@@ -228,6 +219,7 @@ elif choice == "Contact":
         📞 Vous pouvez aussi nous appeler :
         [**Appeler maintenant**](tel:+3374502452)
         """, unsafe_allow_html=True)
+        st.markdown("""
         **Horaires d'ouverture:**
         Lundi-Vendredi: 9h-19h
         Samedi: 9h-17h
@@ -252,19 +244,18 @@ elif choice == "Contact":
                     <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_next" value="https://ton-site.com/merci">
-                    <input type="text" name="Nom" value="{name}" hidden>
+                    <input type="text" name="Nom" value="{nom}" hidden>
                     <input type="email" name="Email" value="{email}" hidden>
-                   <textarea name="Message" hidden>{message}</textarea>
-                   <button type="submit">Envoyer</button>
+                    <textarea name="Message" hidden>{message}</textarea>
+                    <button type="submit">Envoyer</button>
                     </form>
-                   """, unsafe_allow_html=True)
+                    """, unsafe_allow_html=True)
                 else:
                     st.error("Veuillez remplir les champs obligatoires (*)")
 
 # Section Espace Élève
 elif choice == "Espace Élève":
     st.header("Espace Élève IGED")
-
     tab1, tab2 = st.tabs(["Connexion", "Première visite"])
 
     with tab1:
@@ -288,7 +279,7 @@ elif choice == "Espace Élève":
 
         **Demandez vos identifiants à votre conseiller pédagogique**
         """)
-        st.images("platforme.jpg", width=500)
+        st.image("platforme.jpg", width=500)
 
 # Pied de page
 st.markdown("---")
