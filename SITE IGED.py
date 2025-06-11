@@ -99,7 +99,7 @@ if choice == "Accueil":
                   {"role": "user", "content": question}
                   ]
                   )
-                  st.write(response["choices"][0]["message"]["content"])
+    st.write(response["choices"][0]["message"]["content"])
 
         
 
