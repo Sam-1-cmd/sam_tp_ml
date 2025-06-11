@@ -218,7 +218,7 @@ elif choice == "Contact":
         ✉️ brousybah08@gmail.com
         📞 Vous pouvez aussi nous appeler :
         [**Appeler maintenant**](tel:+3374502452)
-        """, unsafe_allow_html=True)
+        """)
         st.markdown("""
         **Horaires d'ouverture:**
         Lundi-Vendredi: 9h-19h
