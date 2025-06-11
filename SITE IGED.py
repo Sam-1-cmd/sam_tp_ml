@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 import pandas as pd
-
+import openai
 # Configuration de la page
 st.set_page_config(
     page_title="IGED Innovation groupe étude digitale",
@@ -85,8 +85,6 @@ if choice == "Accueil":
                 st.success("Demande envoyée! Nous vous contacterons sous 48h.")
                 
     with col3:
-        import streamlit as st
-        import openai
 
         openai.api_key = "YOUR_OPENAI_API_KEY"  # Mets ta clé ici
 
