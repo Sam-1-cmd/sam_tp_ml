@@ -36,7 +36,7 @@ def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# local_css("style.css")  # Décommenter si vous avez un fichier CSS
+local_css("style.css")  
 
 # Fonction pour l'envoi d'emails avec pièces jointes
 def send_email_with_attachment(sender_email, sender_password, receiver_email, subject, body, attachment):
