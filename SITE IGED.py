@@ -191,34 +191,55 @@ def services_page():
     st.markdown("## 🎯 Nos Solutions Pédagogiques")
     
     tabs = st.tabs(["Cours Particuliers", "Stages Intensifs", "Aide aux Devoirs", "Préparation Examens"])
-    
+
     with tabs[0]:
-        cols = st.columns([1, 2])
-        with cols[0]:
-            st.image("https://tewmoutew.com/img/photos/2021-10-02-201830_bde15679.jpg")
-        with cols[1]:
-            st.markdown("""
-            ### Cours Particuliers à Domicile ou en Ligne
-            - 🔄 **Suivi régulier** ou ⏱️ **ponctuel**  
-            - 🌍 **Toutes matières**, 🎓 **tous niveaux**  
-            - 🕒 **Créneaux flexibles** (matin/soir/week-end)  
-            - 🔍 **Bilan pédagogique initial** gratuit  
-            """)
-    
-    with tabs[1]:
+        st.subheader("Cours Particuliers à Domicile ou en Ligne")
         st.markdown("""
-        ### Stages Intensifs pendant les Vacances
+        - 🔄 **Suivi régulier** ou ⏱️ **ponctuel**  
+        - 🌍 **Toutes matières**, 🎓 **tous niveaux**  
+        - 🕒 **Créneaux flexibles** (matin/soir/week-end)  
+        - 🔍 **Bilan pédagogique initial** gratuit  
+        - ✉️ **Compte-rendu détaillé** après chaque séance  
+        """)
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <img src="https://tewmoutew.com/img/photos/2021-10-02-201830_bde15679.jpg" 
+                style="width: 400px; border-radius: 10px;" />
+                <p style="font-style: italic;">Nos professeurs se déplacent à votre domicile</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with tabs[1]:
+        st.subheader("Stages Intensifs pendant les Vacances")
+        st.markdown("""
         - Stages de révision
         - Stages de remise à niveau
         - Préparation aux examens (Brevet, Bac, Concours)
         - En petits groupes ou individuels
         - 10h à 30h par semaine
         """)
-    
-    # ... (autres onglets de services)
 
-# ... (autres fonctions de pages)
+    with tabs[2]:
+        st.subheader("Aide aux Devoirs")
+        st.markdown("""
+        - Encadrement quotidien
+        - Méthodologie de travail
+        - Organisation du temps
+        - Pour les élèves du primaire au collège
+        """)
 
+    with tabs[3]:
+        st.subheader("Préparation aux Examens")
+        st.markdown("""
+        - BEPC
+        - Baccalauréat toutes séries 
+        - Concours post-bac
+        - Examens blancs corrigés
+        - Simulation d'oraux
+        """)
 # ---- Application Principale ----
 def main():
     # Initialisation de la session
