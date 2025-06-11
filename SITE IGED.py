@@ -85,24 +85,22 @@ if choice == "Accueil":
                 st.success("Demande envoyée! Nous vous contacterons sous 48h.")
                 
     with col3:
+        openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-        openai.api_key = "YOUR_OPENAI_API_KEY"  # Mets ta clé ici
-
-        st.title("Chatbot IA – IGED")
-
-        question = st.text_input("Pose ta question ici")
+        st.title("Assistant IA – IGED")
+        question = st.text_input("Pose une question :")
 
         if question:
-            response = openai.ChatCompletion.create(
-              model="gpt-3.5-turbo",  # ou gpt-4
-              messages=[
-                {"role": "system", "content": "Tu es un assistant pour le site ELECTRO SOLUT."},
-                {"role": "user", "content": question}
+              with st.spinner("Réponse en cours..."):
+                 response = openai.ChatCompletion.create(
+                  model="gpt-3.5-turbo",
+                  messages=[
+                  {"role": "system", "content": "Tu es un assistant qui aide les clients sur le site IGED."},
+                  {"role": "user", "content": question}
                   ]
-             )
-    st.write("Réponse :", response['choices'][0]['message']['content'])
+                  )
+             st.write(response["choices"][0]["message"]["content"])
 
-        
         
 
 
