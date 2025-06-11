@@ -90,11 +90,11 @@ if choice == "Accueil":
 
         openai.api_key = "YOUR_OPENAI_API_KEY"  # Mets ta clé ici
 
-        st.title("Chatbot IA – ELECTRO SOLUT")
+        st.title("Chatbot IA – IGED")
 
-       question = st.text_input("Pose ta question ici")
+        question = st.text_input("Pose ta question ici")
 
-       if question:
+        if question:
             response = openai.ChatCompletion.create(
               model="gpt-3.5-turbo",  # ou gpt-4
               messages=[
