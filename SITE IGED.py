@@ -2,6 +2,11 @@ import streamlit as st
 from PIL import Image
 import pandas as pd
 import openai
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+import smtplib
+import os
 
 # Configuration de la page
 st.set_page_config(
@@ -33,14 +38,33 @@ def local_css(file_name):
 
 # local_css("style.css")  # Décommenter si vous avez un fichier CSS
 
+# Fonction pour l'envoi d'emails avec pièces jointes
+def send_email_with_attachment(sender_email, sender_password, receiver_email, subject, body, attachment):
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = subject
+    
+    msg.attach(MIMEText(body, 'plain'))
+    
+    with open(attachment, "rb") as f:
+        attach = MIMEApplication(f.read(), _subtype="pdf")
+        attach.add_header('Content-Disposition', 'attachment', filename=os.path.basename(attachment))
+        msg.attach(attach)
+    
+    with smtplib.SMTP('smtp.gmail.com', 587) as server:
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.send_message(msg)
+
 # Header avec logo et navigation
 col1, col2, col3 = st.columns([1,2,1])
 with col2:
     st.title("IGED")
     st.subheader("Innovation Groupe Étude Digitale")
 
-# Navigation
-menu = ["Accueil", "Nos Services", "Nos Professeurs", "Tarifs", "Contact", "Espace Élève"]
+# Navigation - Ajout de "Recrutement" dans le menu
+menu = ["Accueil", "Nos Services", "Nos Professeurs", "Tarifs", "Contact", "Espace Élève", "Recrutement"]
 choice = st.sidebar.selectbox("Navigation", menu)
 
 # Fonction pour les réponses ChatGPT
@@ -178,7 +202,6 @@ elif choice == "Nos Services":
 elif choice == "Nos Professeurs":
     st.header("Notre Équipe Pédagogique")
     
-    # Données des professeurs (à remplacer par vos vraies données)
     profs_data = [
         {
             "Photo": "https://via.placeholder.com/150",
@@ -263,7 +286,7 @@ elif choice == "Contact":
         st.subheader("Nos Coordonnées")
         st.markdown("""
         **IGED - Innovation Groupe Étude Digitale**
-              📍 YAMOUSSOKRO, CÔTE D'IVOIRE
+        📍 YAMOUSSOKRO, CÔTE D'IVOIRE
         📞 07 45 50 24 52
         ✉️ brousybah08@gmail.com
         📞 Vous pouvez aussi nous appeler : [**Appeler maintenant**](tel:+3374502452)     
@@ -290,7 +313,6 @@ elif choice == "Contact":
             if submitted:
                 if nom and email and message:
                     st.success("Message envoyé! Nous vous répondrons dans les 48h.")
-                    # Envoi réel du formulaire
                     contact_message = f"Nouveau message de {nom}\nEmail: {email}\nTéléphone: {telephone}\nSujet: {sujet}\nMessage: {message}"
                     st.markdown(f"""
                     <form action="https://formsubmit.co/brousybah08@gmail.com" method="POST">
@@ -332,6 +354,72 @@ elif choice == "Espace Élève":
         **Demandez vos identifiants à votre conseiller pédagogique**
         """)
         st.image("https://via.placeholder.com/500x300?text=Plateforme+IGED", width=500)
+
+# Section Recrutement (Nouvelle section ajoutée)
+elif choice == "Recrutement":
+    st.title("Recrutement de professeurs")
+    st.subheader("Postulez pour rejoindre notre équipe pédagogique")
+
+    with st.form(key='recruitment_form'):
+        name = st.text_input("Nom complet*")
+        email = st.text_input("Email*")
+        phone = st.text_input("Téléphone")
+        niveau_enseignement = st.selectbox("Niveau d'enseignement", 
+                                         ["Primaire", "Collège", "Lycée", "Supérieur", "Tous niveaux"])
+        matieres = st.text_input("Matières enseignées* (séparées par des virgules)")
+        experience = st.text_area("Expérience pédagogique*")
+        motivation = st.text_area("Lettre de motivation")
+        
+        st.title("Importation de votre CV")
+        uploaded_file = st.file_uploader("Téléchargez votre CV (PDF ou DOCX)*", 
+                                       type=["pdf", "docx"], 
+                                       accept_multiple_files=False)
+        
+        submit_button = st.form_submit_button("Envoyer ma candidature")
+        
+        if submit_button:
+            if not all([name, email, matieres, experience, uploaded_file]):
+                st.error("Veuillez remplir tous les champs obligatoires (*)")
+            else:
+                # Sauvegarde temporaire du fichier
+                with open("temp_cv.pdf", "wb") as f:
+                    f.write(uploaded_file.getbuffer())
+                
+                # Configuration de l'email (à mettre dans vos secrets Streamlit)
+                sender_email = st.secrets["EMAIL_ADDRESS"]
+                sender_password = st.secrets["EMAIL_PASSWORD"]
+                receiver_email = "brousybah08@gmail.com"  # Votre email de réception
+                
+                # Construction du message
+                subject = f"Nouvelle candidature IGED - {name}"
+                body = f"""
+                Nouvelle candidature reçue:
+                
+                Nom: {name}
+                Email: {email}
+                Téléphone: {phone}
+                Niveau d'enseignement: {niveau_enseignement}
+                Matières: {matieres}
+                
+                Expérience:
+                {experience}
+                
+                Motivation:
+                {motivation}
+                """
+                
+                try:
+                    # Envoi de l'email avec pièce jointe
+                    send_email_with_attachment(sender_email, sender_password, receiver_email, 
+                                            subject, body, "temp_cv.pdf")
+                    
+                    # Suppression du fichier temporaire
+                    os.remove("temp_cv.pdf")
+                    
+                    st.success("Votre candidature a bien été envoyée !")
+                    st.balloons()
+                except Exception as e:
+                    st.error(f"Une erreur est survenue lors de l'envoi: {str(e)}")
 
 # Pied de page
 st.markdown("---")
