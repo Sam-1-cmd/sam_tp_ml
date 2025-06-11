@@ -212,7 +212,7 @@ elif choice == "Contact":
         st.markdown("""
         **IGED - Innovation Groupe Étude Digitale**
         📍 YAMOUSSOKRO, CÔTE D'IVOIRE
-        📞 07 45 50 24 52
+        📞 07 45 50 24 523
         ✉️ brousybah08@gmail.com
         📞 Vous pouvez aussi nous appeler : [**Appeler maintenant**](tel:+3374502452)     
         """)
