@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
-
 import streamlit as st
 from PIL import Image
 import pandas as pd
 
 # Configuration de la page
 st.set_page_config(
-    page_title="IGED",
+    page_title="IGED Innovation groupe étude digitale",
     page_icon="📚",
     layout="wide"
 )
@@ -59,7 +57,7 @@ if choice == "Accueil":
         personnalisé à chaque élève.
 
         - 📈 Résultats garantis
-        - 👩‍🏫 Professeurs certifiés
+        - 👩‍🏫 Professeurs qualifiés
         - 💻 Plateforme digitale interactive
         - 🏆 95% de satisfaction
         """)
