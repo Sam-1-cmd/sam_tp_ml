@@ -357,70 +357,69 @@ elif choice == "Espace Élève":
 
 # Section Recrutement (Nouvelle section ajoutée)
 elif choice == "Recrutement":
-    st.title("Recrutement de professeurs")
-    st.subheader("Postulez pour rejoindre notre équipe pédagogique")
-
-    with st.form(key='recruitment_form'):
-        name = st.text_input("Nom complet*")
-        email = st.text_input("Email*")
-        phone = st.text_input("Téléphone")
-        niveau_enseignement = st.selectbox("Niveau d'enseignement", 
-                                         ["Primaire", "Collège", "Lycée", "Supérieur", "Tous niveaux"])
-        matieres = st.text_input("Matières enseignées* (séparées par des virgules)")
-        experience = st.text_area("Expérience pédagogique*")
-        motivation = st.text_area("Lettre de motivation")
-        
-        st.title("Importation de votre CV")
-        uploaded_file = st.file_uploader("Téléchargez votre CV (PDF ou DOCX)*", 
-                                       type=["pdf", "docx"], 
-                                       accept_multiple_files=False)
-        
-        submit_button = st.form_submit_button("Envoyer ma candidature")
-        
-        if submit_button:
-            if not all([name, email, matieres, experience, uploaded_file]):
-                st.error("Veuillez remplir tous les champs obligatoires (*)")
-            else:
-                # Sauvegarde temporaire du fichier
-                with open("temp_cv.pdf", "wb") as f:
-                    f.write(uploaded_file.getbuffer())
-                
-                # Configuration de l'email (à mettre dans vos secrets Streamlit)
-                sender_email = st.secrets["EMAIL_ADDRESS"]
-                sender_password = st.secrets["EMAIL_PASSWORD"]
-                receiver_email = "brousybah08@gmail.com"  # Votre email de réception
-                
-                # Construction du message
-                subject = f"Nouvelle candidature IGED - {name}"
-                body = f"""
-                Nouvelle candidature reçue:
-                
-                Nom: {name}
-                Email: {email}
-                Téléphone: {phone}
-                Niveau d'enseignement: {niveau_enseignement}
-                Matières: {matieres}
-                
-                Expérience:
-                {experience}
-                
-                Motivation:
-                {motivation}
-                """
-                
-                try:
-                    # Envoi de l'email avec pièce jointe
-                    send_email_with_attachment(sender_email, sender_password, receiver_email, 
-                                            subject, body, "temp_cv.pdf")
+    st.title("🚀 Rejoignez notre équipe pédagogique")
+    
+    with st.expander("Pourquoi nous rejoindre ?"):
+        st.markdown("""
+        - Environnement dynamique et innovant
+        - Formation continue offerte
+        - Rémunération compétitive (+30% vs marché)
+        - Flexibilité horaire
+        """)
+    
+    tab1, tab2 = st.tabs(["Postuler", "Processus de recrutement"])
+    
+    with tab1:
+        with st.form(key='recruitment_form'):
+            cols = st.columns(2)
+            with cols[0]:
+                name = st.text_input("Nom complet*")
+                email = st.text_input("Email*")
+                phone = st.text_input("Téléphone*")
+            with cols[1]:
+                niveau = st.multiselect("Niveaux enseignés*", 
+                                      ["Primaire", "Collège", "Lycée", "Supérieur"])
+                matieres = st.text_input("Matières enseignées* (séparées par des virgules)")
+            
+            experience = st.text_area("Expérience pédagogique* (années, établissements)")
+            motivation = st.text_area("Pourquoi souhaitez-vous rejoindre IGED ?*")
+            
+            cv = st.file_uploader("CV (PDF uniquement)*", type="pdf")
+            video = st.file_uploader("Vidéo de présentation (optionnel)", type=["mp4", "mov"])
+            
+            submitted = st.form_submit_button("Soumettre ma candidature")
+            
+            if submitted:
+                # Validation des champs
+                if not all([name, email, phone, niveau, matieres, experience, motivation, cv]):
+                    st.error("Veuillez remplir tous les champs obligatoires")
+                else:
+                    # Traitement du CV
+                    with open(f"CV_{name.replace(' ', '_')}.pdf", "wb") as f:
+                        f.write(cv.getbuffer())
                     
-                    # Suppression du fichier temporaire
-                    os.remove("temp_cv.pdf")
-                    
-                    st.success("Votre candidature a bien été envoyée !")
-                    st.balloons()
-                except Exception as e:
-                    st.error(f"Une erreur est survenue lors de l'envoi: {str(e)}")
-
+                    # Envoi email
+                    try:
+                        send_email_with_attachments(
+                            subject=f"Candidature {name}",
+                            body=f"Nouvelle candidature...",
+                            attachments=[f"CV_{name.replace(' ', '_')}.pdf"]
+                        )
+                        st.success("Candidature envoyée avec succès!")
+                        st.balloons()
+                    except Exception as e:
+                        st.error(f"Erreur lors de l'envoi: {str(e)}")
+    
+    with tab2:
+        st.markdown("""
+        ### Notre processus en 4 étapes :
+        1. 📝 Analyse de votre candidature (48h)
+        2. 📞 Entretien téléphonique (30min)
+        3. 🎤 Entretien pédagogique (1h)
+        4. 🏫 Journée d'immersion (optionnelle)
+        
+        *Nous répondons à toutes les candidatures sous 72h*
+        """)
 # Pied de page
 st.markdown("---")
 footer_col1, footer_col2, footer_col3 = st.columns(3)
