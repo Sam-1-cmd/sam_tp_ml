@@ -83,25 +83,31 @@ if choice == "Accueil":
                 </form>
                 """, unsafe_allow_html=True)
                 st.success("Demande envoyée! Nous vous contacterons sous 48h.")
-                
+
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+
+def get_chatgpt_response(user_message: str) -> str:
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": user_message}]
+        )
+        return response["choices"][0]["message"]["content"]
+    except Exception as e:
+        st.error(f"Erreur API OpenAI : {e}")
+        return "Une erreur est survenue en contactant ChatGPT."
+
+
     with col3:
-        openai.api_key = st.secrets["OPENAI_API_KEY"]
+        st.title("Assistant IA")
 
-        st.title("Assistant IA – IGED")
-        question = st.text_input("Pose une question :")
+        user_input = st.text_input("Pose ta question à l'IA 👇")
 
-        if question:
-              with st.spinner("Réponse en cours..."):
-                 response = openai.ChatCompletion.create(
-                  model="gpt-3.5-turbo",
-                  messages=[
-                  {"role": "system", "content": "Tu es un assistant qui aide les clients sur le site IGED."},
-                  {"role": "user", "content": question}
-                  ]
-                  )
-    st.write(response["choices"][0]["message"]["content"])
+        if user_input:
+              output = get_chatgpt_response(user_input)
+              st.write("🧠 Réponse de l'IA :")
+              st.write(output)
 
-        
 
 
 # Section Nos Services
