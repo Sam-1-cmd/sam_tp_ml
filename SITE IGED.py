@@ -157,7 +157,8 @@ def home_page():
             "ANGE B., 17 ans",
             "Élève en Terminale D",
             "Avec IGED, ma moyenne en maths est passée de 8 à 17 en 3 mois !",
-            "https://randomuser.me/api/portraits/women/65.jpg"
+            st.image("moi.jpg", width=150)
+
         )
         
         st.video("https://youtu.be/5agcs8--Szo?si=4tg2qHFHuiRqvxrk")
