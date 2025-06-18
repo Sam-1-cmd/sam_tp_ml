@@ -363,7 +363,7 @@ def main():
         services_page()
     elif st.session_state.current_page == "Espace Élève":
         eleve_page()
-    elif st.session_state.current_page == "Nos Professeurs":
+    elif st.session_state.current_page == "Espace Professeur":
         prof_page()
     elif st.session_state.current_page == "Recrutement":
         recrutement_page()
