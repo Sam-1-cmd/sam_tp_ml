@@ -123,7 +123,7 @@ menu = {
 def show_navigation():
     """Affiche le menu de navigation dans la sidebar"""
     with st.sidebar:
-        st.image("https://urls.fr/ZmO3Ro", width=250)
+        st.image("https://urls.fr/ZmO3Ro", width=300)
         st.markdown("## Navigation")
         
         # Crée des boutons de navigation stylisés
