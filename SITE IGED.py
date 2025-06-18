@@ -240,6 +240,49 @@ def services_page():
         - Examens blancs corrigés
         - Simulation d'oraux
         """)
+def eleve_page():
+    display_header()
+    st.subheader("📚 Espace Élève")
+    nom = st.text_input("Entrez votre prénom")
+    code = st.text_input("Code élève", type="password")
+    
+    if st.button("Se connecter"):
+        if nom and code:
+            st.success(f"Bienvenue, {nom} ! Voici vos ressources.")
+            st.download_button("📄 Télécharger cours de Maths", "Contenu du fichier", file_name="maths.pdf")
+            st.download_button("📄 Télécharger exercices Physique", "Contenu du fichier", file_name="physique.pdf")
+        else:
+            st.error("Veuillez remplir tous les champs.")
+def prof_page():
+    display_header()
+    st.subheader("👩‍🏫 Espace Professeur")
+    nom = st.text_input("Nom d'utilisateur")
+    mdp = st.text_input("Mot de passe", type="password")
+
+    if st.button("Connexion"):
+        if nom and mdp:
+            st.success(f"Bienvenue {nom}")
+            uploaded = st.file_uploader("Déposer un compte-rendu", type=["pdf", "xlsx"])
+            if uploaded:
+                st.success(f"Fichier reçu : {uploaded.name}")
+        else:
+            st.error("Veuillez remplir tous les champs.")
+def recrutement_page():
+    display_header()
+    st.subheader("💼 Rejoignez notre équipe")
+    with st.form("recrutement_form"):
+        nom = st.text_input("Nom complet")
+        email = st.text_input("Adresse email")
+        matiere = st.selectbox("Matière que vous souhaitez enseigner", ["Maths", "Physique", "Anglais", "SVT", "Autre"])
+        cv = st.file_uploader("Déposer votre CV", type=["pdf"])
+        envoyer = st.form_submit_button("Envoyer la candidature")
+        
+        if envoyer:
+            if nom and email and cv:
+                st.success("Votre candidature a été envoyée avec succès.")
+            else:
+                st.error("Merci de remplir tous les champs.")
+
 # ---- Application Principale ----
 def main():
     # Initialisation de la session
@@ -254,7 +297,13 @@ def main():
         home_page()
     elif st.session_state.current_page == "Nos Services":
         services_page()
-    # ... (autres conditions pour chaque page)
+    elif st.session_state.current_page == "Espace Élève":
+        eleve_page()
+    elif st.session_state.current_page == "Nos Professeurs":
+        prof_page()
+    elif st.session_state.current_page == "Recrutement":
+        recrutement_page()
+
     
     # Pied de page commun
     st.markdown("---")
