@@ -113,7 +113,7 @@ def display_header():
 menu = {
     "Accueil": "🏠",
     "Nos Services": "🎯", 
-    "Nos Professeurs": "👩‍🏫",
+    "Espace Professeur": "👩‍🏫",
     "Tarifs": "💳",
     "Contact": "✉️",
     "Espace Élève": "📚",
@@ -282,6 +282,70 @@ def recrutement_page():
                 st.success("Votre candidature a été envoyée avec succès.")
             else:
                 st.error("Merci de remplir tous les champs.")
+def tarifs_page():
+    display_header()
+    st.subheader("💳 Nos Tarifs")
+    
+    st.markdown("""
+    Voici nos formules flexibles selon vos besoins :
+    """)
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.markdown("""
+        ### 🟢 Formule Découverte  
+        - 1h/semaine  
+        - Cours en ligne  
+        - Suivi pédagogique  
+        **➡️ 29€/mois**  
+        """)
+        st.button("Choisir cette formule", key="formule1")
+
+    with col2:
+        st.markdown("""
+        ### 🔵 Formule Standard  
+        - 2h/semaine  
+        - Cours en ligne ou à domicile  
+        - Suivi + bilan mensuel  
+        **➡️ 59€/mois**  
+        """)
+        st.button("Choisir cette formule", key="formule2")
+
+    with col3:
+        st.markdown("""
+        ### 🟣 Formule Premium  
+        - 4h/semaine  
+        - Suivi individuel avancé  
+        - Appels de coaching & révisions  
+        **➡️ 99€/mois**  
+        """)
+        st.button("Choisir cette formule", key="formule3")
+
+    st.markdown("---")
+    st.info("🎁 Réduction -15% pour les élèves recommandés par un ancien IGED.")
+def contact_page():
+    display_header()
+    st.subheader("📩 Contactez-nous")
+    
+    with st.form("contact_form"):
+        nom = st.text_input("Votre nom")
+        email = st.text_input("Votre email")
+        message = st.text_area("Votre message")
+        envoyer = st.form_submit_button("Envoyer")
+        
+        if envoyer:
+            if nom and email and message:
+                st.success("✅ Votre message a bien été envoyé ! Merci.")
+                # Ici tu peux connecter à une fonction d'envoi d'email si besoin
+            else:
+                st.error("❌ Merci de remplir tous les champs.")
+    
+    st.markdown("---")
+    st.markdown("📞 **Téléphone :** [07 45 50 24 52](tel:+33745502452)")
+    st.markdown("✉️ **Email :** [brousybah08@gmail.com](mailto:brousybah08@gmail.com)")
+    st.map(pd.DataFrame({'lat': [5.3541], 'lon': [-4.0016]}))  # Localisation Abidjan
+
 
 # ---- Application Principale ----
 def main():
@@ -303,6 +367,11 @@ def main():
         prof_page()
     elif st.session_state.current_page == "Recrutement":
         recrutement_page()
+    elif st.session_state.current_page == "Tarifs":
+        tarifs_page()
+    elif st.session_state.current_page == "Contact":
+        contact_page()
+
 
     
     # Pied de page commun
