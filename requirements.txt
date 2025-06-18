@@ -1,2 +1,5 @@
 openai
 streamlit
+Pillow
+pandas
+openai
