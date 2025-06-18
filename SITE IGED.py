@@ -154,9 +154,9 @@ def home_page():
         """)
         
         display_testimonial(
-            "Amina K., 16 ans",
-            "Élève en Terminale S",
-            "Avec IGED, ma moyenne en maths est passée de 8 à 15 en 3 mois !",
+            "ANGE B., 17 ans",
+            "Élève en Terminale D",
+            "Avec IGED, ma moyenne en maths est passée de 8 à 17 en 3 mois !",
             "https://randomuser.me/api/portraits/women/65.jpg"
         )
         
