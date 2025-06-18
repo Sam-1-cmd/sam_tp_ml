@@ -133,7 +133,7 @@ def show_navigation():
         
         st.markdown("---")
         st.markdown("📞 [07 45 50 24 52](tel:+2250745502452)")
-        st.markdown("✉️ [contact@iged-ci.com](mailto:contact@iged-ci.com)")
+        st.markdown("✉️ [brousybah08@gmail.com](mailto:brousybah08@gmail.com)")
 
 # ---- Pages ----
 def home_page():
