@@ -123,7 +123,7 @@ menu = {
 def show_navigation():
     """Affiche le menu de navigation dans la sidebar"""
     with st.sidebar:
-        st.image("https://via.placeholder.com/150x50?text=IGED+Logo", width=150)
+        st.image("logo_iged.png", width=150)
         st.markdown("## Navigation")
         
         # Crée des boutons de navigation stylisés
