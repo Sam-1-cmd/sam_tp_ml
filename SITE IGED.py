@@ -157,7 +157,7 @@ def home_page():
             "ANGE B., 17 ans",
             "Élève en Terminale D",
             "Avec IGED, ma moyenne en maths est passée de 8 à 17 en 3 mois !",
-            "moi_ronde.jpg"
+            "https://imgur.com/a/XkoRrf7"
 
         )
         
