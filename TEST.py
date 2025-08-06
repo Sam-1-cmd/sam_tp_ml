@@ -1,84 +1,22 @@
 import streamlit as st
-from PIL import Image
+import random
+import time
 
-# --- Configuration de la page ---
-st.set_page_config(page_title="ELECTRO SOLUT – Vente d'ordinateurs", layout="wide")
+st.title("Simple chat")
 
-# --- Bannière avec logo ---
-logo_path = "07502773-b2b6-4ad9-bb64-6d36ab9651f4.png"  # Ton image locale (assure-toi qu'elle est bien dans le dossier)
-col1, col2 = st.columns([1, 6])
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
-with col1:
-    st.image(Image.open(logo_path), width=80)
+# Display chat messages from history on app rerun
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-with col2:
-    st.markdown("""
-        <div style="background-color:#0A5275;padding:20px;border-radius:10px;">
-            <h1 style="color:white;text-align:center;">💻 ELECTRO SOLUT</h1>
-            <h3 style="color:white;text-align:center;">Votre partenaire en solutions informatiques</h3>
-        </div>
-    """, unsafe_allow_html=True)
-
-# --- Menu de navigation ---
-menu = st.radio("Navigation", ["Accueil", "Nos produits", "Contact"], horizontal=True)
-
-# --- Page Accueil ---
-if menu == "Accueil":
-    st.header("📢 À propos de nous")
-    st.write("""
-    **ELECTRO SOLUT** est une entreprise spécialisée dans la vente d'ordinateurs portables, de bureau 
-    et d’accessoires tech haut de gamme.  
-    Nous proposons des produits fiables, performants et adaptés à tous les besoins (étudiants, professionnels, gamers, etc.).
-    """)
-
-# --- Page Produits ---
-elif menu == "Nos produits":
-    st.header("🛒 Nos produits")
-    cols = st.columns(3)
-
-    with cols[0]:
-        st.image("https://images.unsplash.com/photo-1517336714731-489689fd1ca8", caption="Ordinateur portable ProBook", use_container_width=True)
-        st.write("💰 **Prix :** 899 €")
-        st.write("💡 Idéal pour les professionnels.")
-
-    with cols[1]:
-        st.image("https://images.unsplash.com/photo-1587202372775-a429ef54b29b", caption="Ordinateur Gamer X-Treme", use_container_width=True)
-        st.write("💰 **Prix :** 1299 €")
-        st.write("🎮 Hautes performances pour gaming et montage vidéo.")
-
-    with cols[2]:
-        st.image("https://images.unsplash.com/photo-1584270354949-1f7f25e6b3b9", caption="Mini PC Compact", use_container_width=True)
-        st.write("💰 **Prix :** 499 €")
-        st.write("🧳 Ultra-portable, idéal pour les déplacements.")
-
-# --- Page Contact ---
-elif menu == "Contact":
-    st.header("📬 Contactez-nous")
-    with st.form(key='contact_form'):
-        nom = st.text_input("Nom")
-        email = st.text_input("Email")
-        message = st.text_area("Votre message")
-        envoyer = st.form_submit_button("Envoyer")
-
-        if envoyer:
-            st.success("✅ Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.")
-
-    # Bouton de téléchargement du catalogue (assurez-vous que le fichier existe)
-    try:
-        with open("catalogue_electro_solut.pdf", "rb") as file:
-            st.download_button(label="📄 Télécharger notre catalogue",
-                               data=file,
-                               file_name="catalogue_electro_solut.pdf",
-                               mime="application/pdf")
-    except FileNotFoundError:
-        st.warning("⚠️ Le fichier `catalogue_electro_solut.pdf` est introuvable.")
-
-# --- Pied de page ---
-st.markdown("""
-    <hr>
-    <div style="text-align:center;">
-        <p>© 2025 ELECTRO SOLUT – Tous droits réservés.</p>
-        <p>📧 dawaeric.fofana@estp.fr | 📞 +33 6 25 16 97 85</p>
-    </div>
-""", unsafe_allow_html=True)
-
+# Accept user input
+if prompt := st.chat_input("What is up?"):
+    # Display user message in chat message container
+    with st.chat_message("user"):
+        st.markdown(prompt)
+    # Add user message to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
