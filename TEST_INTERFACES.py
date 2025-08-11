@@ -1,12 +1,11 @@
 import io
 import os
-import base64
 import datetime as dt
 import streamlit as st
 
 # -------------------------------------------------
 # ICPE-VRD Analyzer — UX utilisateur + panneau Admin
-# Version : v0.3-maquette (améliorations A) — Correctifs f-strings
+# Version : v0.3.1-maquette — Correctifs f-strings & doublons
 # Dépendances : streamlit uniquement
 # Lancement    : streamlit run app.py
 # -------------------------------------------------
@@ -180,7 +179,7 @@ def hero_and_kpis():
         with k2:
             st.metric("Dernière indexation", ss.last_index_at or "—")
         with k3:
-            st.metric("Version", "v0.3‑maquette")
+            st.metric("Version", "v0.3.1‑maquette")
     st.markdown("---")
 
 
@@ -357,13 +356,12 @@ st.markdown("---")
 st.caption("Maquette UX : panneau Utilisateur épuré • panneau Admin séparé pour ingestion & index. RAG à intégrer ensuite.")
 import io
 import os
-import base64
 import datetime as dt
 import streamlit as st
 
 # -------------------------------------------------
 # ICPE-VRD Analyzer — UX utilisateur + panneau Admin
-# Version : v0.3-maquette (améliorations A) — Correctifs f-strings
+# Version : v0.3.1-maquette — Correctifs f-strings & doublons
 # Dépendances : streamlit uniquement
 # Lancement    : streamlit run app.py
 # -------------------------------------------------
@@ -537,7 +535,7 @@ def hero_and_kpis():
         with k2:
             st.metric("Dernière indexation", ss.last_index_at or "—")
         with k3:
-            st.metric("Version", "v0.3‑maquette")
+            st.metric("Version", "v0.3.1‑maquette")
     st.markdown("---")
 
 
