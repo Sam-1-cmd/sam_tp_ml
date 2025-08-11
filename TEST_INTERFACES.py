@@ -6,7 +6,7 @@ import streamlit as st
 
 # -------------------------------------------------
 # ICPE-VRD Analyzer — UX utilisateur + panneau Admin
-# Version : v0.3-maquette (améliorations A)
+# Version : v0.3-maquette (améliorations A) — Correctifs f-strings
 # Dépendances : streamlit uniquement
 # Lancement    : streamlit run app.py
 # -------------------------------------------------
@@ -363,7 +363,7 @@ import streamlit as st
 
 # -------------------------------------------------
 # ICPE-VRD Analyzer — UX utilisateur + panneau Admin
-# Version : v0.3-maquette (améliorations A)
+# Version : v0.3-maquette (améliorations A) — Correctifs f-strings
 # Dépendances : streamlit uniquement
 # Lancement    : streamlit run app.py
 # -------------------------------------------------
