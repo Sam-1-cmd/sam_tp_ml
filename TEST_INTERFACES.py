@@ -483,24 +483,25 @@ Le maître d’ouvrage
 st.markdown("---")
 
 # Sécurité : initialise les variables si elles n'existent pas encore
-if "included_indices" not in locals():
-    included_indices = []
-if "res" not in locals():
-    res = []
+query = query if "query" in locals() else ""
+contexte = contexte if "contexte" in locals() else {}
+included_indices = included_indices if "included_indices" in locals() else []
+res = res if "res" in locals() else []
 
 # Garde uniquement les extraits cochés, sinon tous
-res_included = [res[i] for i in included_indices] if included_indices else res
+res_included = [res[i] for i in included_indices if i < len(res)] if included_indices else res
 
-# Génération du PDF
-pdf_data = export_pdf(query, res_included, contexte, logo_path="logo.png")
-
-# Bouton de téléchargement
-st.download_button(
-    "📄 Télécharger la fiche (PDF)",
-    data=pdf_data,
-    file_name="analyse_icpe_vrd.pdf",
-    mime="application/pdf",
-)
+# Génération du PDF avec vérification des paramètres
+try:
+    pdf_data = export_pdf(query, res_included, contexte, logo_path="logo.png")
+    st.download_button(
+        "📄 Télécharger la fiche (PDF)",
+        data=pdf_data,
+        file_name="analyse_icpe_vrd.pdf",
+        mime="application/pdf",
+    )
+except Exception as e:
+    st.error(f"Erreur lors de la génération du PDF : {e}")
 
 
     # Disclaimer
