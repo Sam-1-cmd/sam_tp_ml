@@ -481,6 +481,7 @@ Le maître d’ouvrage
 
 # Export (PDF) — avec items inclus
 st.markdown("---")
+included_indices = included_indices if "included_indices" in locals() else []
 res_included = [res[i] for i in included_indices] if included_indices else res
 pdf_data = export_pdf(query, res_included, contexte, logo_path="logo.png")
 st.download_button(
