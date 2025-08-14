@@ -29,7 +29,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 hr {margin: 0.8rem 0;}
 .kpi .stMetric {border:1px solid #eee; border-radius:12px; padding:8px;}
 .suggest .stButton>button {width:100%;}
-</style>
+</style> 
 """,
     unsafe_allow_html=True,
 )
