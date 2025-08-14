@@ -75,16 +75,175 @@ def fake_results(query: str, k: int, contexte: dict):
         })
     return out
 
-def export_txt(query: str, res: list, contexte: dict) -> bytes:
-    report = io.StringIO()
-    report.write("ICPE-VRD — Fiche d’analyse (maquette)\n")
-    report.write(f"Date: {dt.datetime.now().isoformat()}\n")
-    report.write(f"Projet: {contexte.get('projet','')}, Commune: {contexte.get('commune','')}\n")
-    report.write(f"Type d’intervention: {contexte.get('type_intervention','')}\n")
-    report.write(f"Question: {query}\n\n")
-    for i, d in enumerate(res, 1):
-        report.write(f"[{i}] {d['doc']} p.{d['page']}\n{d['text']}\n\n")
-    return report.getvalue().encode("utf-8")
+# --- PDF export (ReportLab) ---
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import mm
+from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from io import BytesIO
+import datetime as dt
+import os
+
+def export_pdf(query: str, res: list, contexte: dict, logo_path: str = "logo.png") -> bytes:
+    """
+    Génère un PDF 'Fiche d'analyse ICPE/VRD' avec en‑tête, pied de page, logo, meta et extraits.
+    - query: question utilisateur
+    - res: liste de dicts: {"doc","page","text","version","is_current"}
+    - contexte: {"projet","commune","type_intervention"}
+    - logo_path: chemin du logo (optionnel)
+    """
+    # ----- Fontes (accents) : tente DejaVuSans si dispo, sinon Helvetica -----
+    try:
+        if os.path.exists("DejaVuSans.ttf"):
+            pdfmetrics.registerFont(TTFont("DejaVuSans", "DejaVuSans.ttf"))
+            base_font = "DejaVuSans"
+        else:
+            base_font = "Helvetica"
+    except Exception:
+        base_font = "Helvetica"
+
+    # ----- Styles -----
+    styles = getSampleStyleSheet()
+    styles["Title"].fontName = base_font
+    styles["Normal"].fontName = base_font
+    styles["Heading2"].fontName = base_font
+    styles["Heading3"].fontName = base_font
+
+    style_title = ParagraphStyle(
+        "TitleCentered",
+        parent=styles["Title"],
+        alignment=1,  # center
+        fontSize=16,
+        leading=20,
+        spaceAfter=6,
+    )
+    style_meta = ParagraphStyle(
+        "Meta",
+        parent=styles["Normal"],
+        fontSize=10,
+        leading=14,
+        textColor=colors.black,
+    )
+    style_section = ParagraphStyle(
+        "Section",
+        parent=styles["Heading3"],
+        fontSize=12,
+        leading=14,
+        spaceBefore=6,
+        spaceAfter=4,
+    )
+    style_code = ParagraphStyle(
+        "CodeLike",
+        parent=styles["Normal"],
+        fontSize=9,
+        leading=12,
+    )
+
+    # ----- Buffer & doc -----
+    buf = BytesIO()
+    PAGE_W, PAGE_H = A4
+    margin = 15 * mm
+    doc = SimpleDocTemplate(
+        buf,
+        pagesize=A4,
+        leftMargin=margin,
+        rightMargin=margin,
+        topMargin=35 * mm,      # espace pour l'en‑tête
+        bottomMargin=20 * mm,   # espace pour le pied de page
+    )
+
+    today = dt.datetime.now().strftime("%d/%m/%Y %H:%M")
+    projet  = (contexte.get("projet") or "—")
+    commune = (contexte.get("commune") or "—")
+    type_it = (contexte.get("type_intervention") or "—")
+
+    # ----- En-tête & pied de page -----
+    def draw_header_footer(canv: canvas.Canvas, doc_ref):
+        # En-tête: logo + titre + date
+        canv.saveState()
+        y_top = PAGE_H - 12 * mm
+
+        # Logo (si dispo)
+        if logo_path and os.path.exists(logo_path):
+            try:
+                canv.drawImage(logo_path, PAGE_W - (margin + 30*mm), PAGE_H - (15*mm),
+                               width=28*mm, height=10*mm, preserveAspectRatio=True, mask='auto')
+            except Exception:
+                pass
+
+        canv.setFont(base_font, 11)
+        canv.drawString(margin, y_top, "Fiche d’analyse ICPE / VRD")
+        canv.setFont(base_font, 9)
+        canv.drawRightString(PAGE_W - margin, y_top - 4*mm, f"Date : {today}")
+
+        # Ligne sous l'en‑tête
+        canv.setStrokeColor(colors.lightgrey)
+        canv.line(margin, PAGE_H - 18*mm, PAGE_W - margin, PAGE_H - 18*mm)
+
+        # Pied de page: disclaimer + pagination
+        canv.setFont(base_font, 8)
+        canv.setFillColor(colors.grey)
+        canv.drawString(margin, 10*mm, "Aide décisionnelle — ne remplace pas un avis réglementaire.")
+        canv.drawRightString(PAGE_W - margin, 10*mm, f"Page {doc_ref.page}")
+
+        canv.restoreState()
+
+    # ----- Contenu (flowables) -----
+    story = []
+    story.append(Paragraph("FICHE D’ANALYSE ICPE / VRD", style_title))
+    story.append(Spacer(1, 2 * mm))
+
+    # Tableau méta (projet/commune/type)
+    data = [
+        ["Projet :", projet, "Commune :", commune],
+        ["Type d’intervention :", type_it, "Question :", query or "—"],
+    ]
+    table = Table(data, colWidths=[28*mm, None, 25*mm, None])
+    table.setStyle(TableStyle([
+        ("FONTNAME", (0,0), (-1,-1), base_font),
+        ("FONTSIZE", (0,0), (-1,-1), 9),
+        ("VALIGN", (0,0), (-1,-1), "TOP"),
+        ("TEXTCOLOR", (0,0), (-1,-1), colors.black),
+        ("BOTTOMPADDING", (0,0), (-1,-1), 4),
+        ("TOPPADDING", (0,0), (-1,-1), 2),
+    ]))
+    story.append(table)
+    story.append(Spacer(1, 4 * mm))
+
+    # Section extraits
+    story.append(Paragraph("Extraits réglementaires sélectionnés", style_section))
+    if not res:
+        story.append(Paragraph("— Aucun extrait.", style_meta))
+    else:
+        for i, d in enumerate(res, 1):
+            head = f"[{i}] {d.get('doc','?')} — page {d.get('page','?')}"
+            story.append(Paragraph(head, styles["Heading4"]))
+            meta = f"<font size=8 color='#666666'>Version: {d.get('version','?')} • courant={d.get('is_current', False)}</font>"
+            story.append(Paragraph(meta, style_meta))
+            story.append(Spacer(1, 1.5 * mm))
+
+            # Texte (Paragraph gère le wrap; si tu veux du monospaced, garde style_code)
+            txt = (d.get("text") or "").replace("\t", "    ")
+            # échappe basiquement les chevrons pour éviter l'interprétation HTML
+            txt = txt.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            story.append(Paragraph(txt.replace("\n", "<br/>"), style_code))
+            story.append(Spacer(1, 5 * mm))
+
+    # (Optionnel) nouvelle page pour autres sections (synthèse, démarches...)
+    # story.append(PageBreak())
+    # story.append(Paragraph("Synthèse", style_section))
+    # story.append(Paragraph("…", styles["Normal"]))
+
+    # ----- Build -----
+    doc.build(story, onFirstPage=draw_header_footer, onLaterPages=draw_header_footer)
+    pdf_bytes = buf.getvalue()
+    buf.close()
+    return pdf_bytes
+
 
 # ----------------- Sidebar (profil) -----------------
 st.sidebar.title("ICPE‑VRD Analyzer")
@@ -320,16 +479,16 @@ Le maître d’ouvrage
                 language="text",
             )
 
-        # Export (TXT) — avec items inclus
-        st.markdown("---")
-        res_included = [res[i] for i in included_indices] if included_indices else res
-        data = export_txt(query, res_included, contexte)
-        st.download_button(
-            "📄 Télécharger la fiche (TXT)",
-            data=data,
-            file_name="analyse_icpe_vrd.txt",
-            mime="text/plain",
-        )
+# Export (PDF) — avec items inclus
+st.markdown("---")
+res_included = [res[i] for i in included_indices] if included_indices else res
+pdf_data = export_pdf(query, res_included, contexte, logo_path="logo.png")
+st.download_button(
+    "📄 Télécharger la fiche (PDF)",
+    data=pdf_data,
+    file_name="analyse_icpe_vrd.pdf",
+    mime="application/pdf",
+)
 
     # Disclaimer
     st.caption("⚖️ Aide décisionnelle — ne remplace pas un avis réglementaire. Dernière mise à jour des textes : —")
