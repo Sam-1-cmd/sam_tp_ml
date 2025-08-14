@@ -58,18 +58,22 @@ def fake_results(query: str, k: int, contexte: dict):
         doc = base_docs[i % len(base_docs)]
         page = 1 + (i % 14)
         text = (
-            f"[Extrait simulé] Contexte: {contexte.get('type_intervention','(n/a)')} — Projet: {contexte.get('projet','(n/a)')}
-"
-            f"• Source: {doc} — page {page}
-"
-            f"• Lien avec: '{(query or '')[:60]}…'
-"
-            "• Points: accès pompiers, bassins de rétention, seuils rubrique 1510, eaux pluviales.
-"
+            f"[Extrait simulé] Contexte: {contexte.get('type_intervention','(n/a)')} — "
+            f"Projet: {contexte.get('projet','(n/a)')}\n"
+            f"• Source: {doc} — page {page}\n"
+            f"• Lien avec: '{(query or '')[:60]}…'\n"
+            "• Points: accès pompiers, bassins de rétention, seuils rubrique 1510, eaux pluviales.\n"
             "• Note: Démonstration UI (aucun embed/ranking réel)."
         )
-        out.append({"doc": doc, "page": page, "text": text, "version": "v1", "is_current": True})
+        out.append({
+            "doc": doc,
+            "page": page,
+            "text": text,
+            "version": "v1",
+            "is_current": True
+        })
     return out
+
 
 
 def export_txt(query: str, res: list, contexte: dict) -> bytes:
