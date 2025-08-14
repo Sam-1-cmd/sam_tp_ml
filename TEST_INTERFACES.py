@@ -491,7 +491,7 @@ st.download_button(
 )
 
     # Disclaimer
-    st.caption("⚖️ Aide décisionnelle — ne remplace pas un avis réglementaire. Dernière mise à jour des textes : —")
+st.caption("⚖️ Aide décisionnelle — ne remplace pas un avis réglementaire. Dernière mise à jour des textes : —")
 
 # ----------------- Routage -----------------
 if role.startswith("Admin"):
