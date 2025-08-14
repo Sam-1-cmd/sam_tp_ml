@@ -479,17 +479,29 @@ Le maître d’ouvrage
                 language="text",
             )
 
-# Export (PDF) — avec items inclus
+# --- Export (PDF) ---
 st.markdown("---")
-included_indices = included_indices if "included_indices" in locals() else []
+
+# Sécurité : initialise les variables si elles n'existent pas encore
+if "included_indices" not in locals():
+    included_indices = []
+if "res" not in locals():
+    res = []
+
+# Garde uniquement les extraits cochés, sinon tous
 res_included = [res[i] for i in included_indices] if included_indices else res
+
+# Génération du PDF
 pdf_data = export_pdf(query, res_included, contexte, logo_path="logo.png")
+
+# Bouton de téléchargement
 st.download_button(
     "📄 Télécharger la fiche (PDF)",
     data=pdf_data,
     file_name="analyse_icpe_vrd.pdf",
     mime="application/pdf",
 )
+
 
     # Disclaimer
 st.caption("⚖️ Aide décisionnelle — ne remplace pas un avis réglementaire. Dernière mise à jour des textes : —")
