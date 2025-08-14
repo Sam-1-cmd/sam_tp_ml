@@ -3,3 +3,5 @@ streamlit
 Pillow
 pandas
 openai
+reportlab
+
