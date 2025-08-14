@@ -78,23 +78,15 @@ def fake_results(query: str, k: int, contexte: dict):
 
 def export_txt(query: str, res: list, contexte: dict) -> bytes:
     report = io.StringIO()
-    report.write("ICPE‑VRD — Fiche d’analyse (maquette)
-")
-    report.write(f"Date: {dt.datetime.now().isoformat()}
-")
-    report.write(f"Projet: {contexte.get('projet','')}, Commune: {contexte.get('commune','')}
-")
-    report.write(f"Type d’intervention: {contexte.get('type_intervention','')}
-")
-    report.write(f"Question: {query}
-
-")
+    report.write("ICPE-VRD — Fiche d’analyse (maquette)\n")
+    report.write(f"Date: {dt.datetime.now().isoformat()}\n")
+    report.write(f"Projet: {contexte.get('projet','')}, Commune: {contexte.get('commune','')}\n")
+    report.write(f"Type d’intervention: {contexte.get('type_intervention','')}\n")
+    report.write(f"Question: {query}\n\n")
     for i, d in enumerate(res, 1):
-        report.write(f"[{i}] {d['doc']} p.{d['page']}
-{d['text']}
-
-")
+        report.write(f"[{i}] {d['doc']} p.{d['page']}\n{d['text']}\n\n")
     return report.getvalue().encode("utf-8")
+
 
 
 # ----------------- Sidebar (profil) -----------------
