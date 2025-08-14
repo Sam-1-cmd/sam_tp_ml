@@ -204,3 +204,142 @@ def render_user():
                     "Autre",
                 ],
                 index=1,
+            )
+        st.caption("Ces champs aident à contextualiser l’analyse et le rapport exporté.")
+
+    # Suggestions de prompts
+    suggestions_ui()
+
+    # Formulaire d’analyse (Enter pour soumettre)
+    with st.form("frm_analyse"):
+        query = st.text_area(
+            "Votre question",
+            height=120,
+            placeholder="Décrivez la situation ou posez votre question…",
+            value=ss.prefill_query,
+        )
+        exha = st.slider(
+            "Niveau d’exhaustivité des extraits",
+            0, 100, 40,
+            help="Plus haut = plus d’extraits potentiels. Pas d’option technique type ‘Top‑K’."
+        )
+        submitted = st.form_submit_button("Analyser", type="primary")
+
+    # Historique récent
+    with st.expander("🕘 Historique récent"):
+        if not ss.history:
+            st.caption("Aucune requête pour l’instant.")
+        else:
+            for h in ss.history:
+                if st.button(h["q"][:70] + "…", key=f"hist_{h['ts']}"):
+                    ss.prefill_query = h["q"]
+                    st.experimental_rerun()
+
+    if submitted:
+        if not query.strip():
+            st.warning("Merci de saisir une question.")
+            return
+
+        # Sauvegarde historique
+        ss.history.insert(0, {"q": query, "ts": dt.datetime.now().isoformat(timespec="seconds")})
+        ss.history = ss.history[:10]
+
+        # Calcul du top_k simple à partir de l’exhaustivité
+        top_k = 3 + int(exha / 25)   # 3..7
+        contexte = {"projet": projet, "commune": commune, "type_intervention": type_intervention}
+
+        with st.spinner("Analyse de la base documentaire (maquette)…"):
+            res = fake_results(query, top_k, contexte)
+
+        tab1, tab2, tab3, tab4, tab5 = st.tabs([
+            "📚 Extraits",
+            "🧠 Synthèse",
+            "📄 Démarches admin",
+            "⚠️ Criticité",
+            "✍️ Aide à la rédaction",
+        ])
+
+        included_indices = []
+        with tab1:
+            st.subheader("Extraits pertinents")
+            for i, d in enumerate(res, 1):
+                with st.expander(f"{i}. {d['doc']} — page {d['page']}"):
+                    st.markdown(
+                        f"<div class='card'><pre>{d['text']}</pre>"
+                        f"<div class='small'>Version: {d['version']} • is_current={d['is_current']}</div></div>",
+                        unsafe_allow_html=True,
+                    )
+                    a1, a2, a3 = st.columns([1, 1, 2])
+                    if a1.button("📋 Copier", key=f"copy_{i}"):
+                        st.toast("Extrait copié (simulé)", icon="📋")
+                    if a2.button("🔗 Ouvrir PDF", key=f"open_{i}"):
+                        st.toast("Ouverture PDF (à brancher)", icon="🔗")
+                    flag = a3.checkbox("Inclure dans le rapport", key=f"inc_{i}", value=True)
+                    if flag:
+                        included_indices.append(i - 1)
+
+        with tab2:
+            st.subheader("Synthèse (bientôt propulsée par LLM)")
+            st.info("Ici viendra la synthèse automatique (obligations, points de vigilance, actions).")
+
+        with tab3:
+            st.subheader("Démarches administratives — proposition initiale (maquette)")
+            st.markdown("- PAC <span class='badge low'>léger</span> • si pas de dépassement de seuils", unsafe_allow_html=True)
+            st.markdown("- Modification d’autorisation <span class='badge med'>moyen</span> • si incidence notable", unsafe_allow_html=True)
+            st.markdown("- Étude d’impact <span class='badge high'>élevé</span> • si écart substantiel", unsafe_allow_html=True)
+            st.caption("Ces règles seront codées à partir d’un arbre de décision conforme aux textes ICPE (quand RAG/KB sera branché).")
+
+        with tab4:
+            st.subheader("Niveau de criticité (maquette)")
+            colL, colM, colH = st.columns(3)
+            with colL:
+                st.write("• **Eaux pluviales** ")
+                severity_badge("moyenne")
+            with colM:
+                st.write("• **Accès pompiers** ")
+                severity_badge("faible")
+            with colH:
+                st.write("• **Risques inondation** ")
+                severity_badge("moyenne")
+            st.caption("La vraie version calculera des scores à partir des extraits + règles métiers.")
+
+        with tab5:
+            st.subheader("Aide à la rédaction (maquette)")
+            st.write("Générer un **courrier PAC** :")
+            st.code(
+                f"""Objet : Portée à connaissance – {projet or 'Projet X'} ({commune or 'Commune'})
+
+Madame, Monsieur,
+Dans le cadre du projet {projet or 'X'}, nous envisageons {type_intervention.lower()}.
+Vous trouverez ci-joint les éléments descriptifs et les mesures de maîtrise envisagées.
+Nous restons à votre disposition pour tout complément.
+
+Cordialement,
+Le maître d’ouvrage
+""",
+                language="text",
+            )
+
+        # Export (TXT) — avec items inclus
+        st.markdown("---")
+        res_included = [res[i] for i in included_indices] if included_indices else res
+        data = export_txt(query, res_included, contexte)
+        st.download_button(
+            "📄 Télécharger la fiche (TXT)",
+            data=data,
+            file_name="analyse_icpe_vrd.txt",
+            mime="text/plain",
+        )
+
+    # Disclaimer
+    st.caption("⚖️ Aide décisionnelle — ne remplace pas un avis réglementaire. Dernière mise à jour des textes : —")
+
+# ----------------- Routage -----------------
+if role.startswith("Admin"):
+    render_admin()
+else:
+    render_user()
+
+# ----------------- Pied de page -----------------
+st.markdown("---")
+st.caption("Maquette UX : panneau Utilisateur épuré • panneau Admin séparé pour ingestion & index. RAG à intégrer ensuite.")
